@@ -1,0 +1,39 @@
+{
+  "name": "earth_seed",
+  "version": "1.0.0",
+  "description": "Retailer factory portal",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teceads/earthseed_app.git"
+  },
+  "author": "Teceads solution",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/teceads/earthseed_app/issues"
+  },
+  "homepage": "https://github.com/teceads/earthseed_app#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "convert-excel-to-json": "^1.7.0",
+    "crom": "^0.1.0",
+    "ejs": "^3.1.6",
+    "excel-to-json": "^1.0.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "express-session": "^1.17.2",
+    "mongoose": "^5.13.7",
+    "node": "^15.14.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^6.1.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "dotenv": "^8.6.0",
+    "nodemon": "^2.0.12"
+  }
+}

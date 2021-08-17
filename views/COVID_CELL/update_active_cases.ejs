@@ -1,0 +1,146 @@
+<%- include("header",{element: element}); -%>
+
+<!-- Page-Title -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-right align-item-center mt-2">
+                
+                <!-- <button type="button" class="btn btn-info px-4 align-self-center report-btn" data-toggle="modal"
+                    data-target=".bs-example-modal-center-upload">Upload Master File</button> -->
+
+            </div>
+            <h4 class="page-title mb-2"><i class="mdi mdi-monitor mr-2"></i>All Patient List</h4>
+            <div class="">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">District Covid Management</a></li>
+                    <li class="breadcrumb-item active">All Patient List</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+<%- include("header2"); -%>
+<!-- Page Content-->
+<div class="page-content" style="overflow: scroll;">
+        <div class="container" style="overflow: scroll;">
+
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h4 class="mt-0 header-title">Patient List</h4>
+
+
+
+
+                        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive "
+                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Sr No</th>
+                                    <th>Block</th>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                    <th>Sex</th>
+                                    <th>Adress</th>
+                                    <th>Telephone</th>
+                                    <th>Positive Declare Date</th>
+                                    <th>Status</th>
+
+
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                <% patients_list.forEach(element => {  %>
+                                <tr>
+                                    <td><%= element.srno%></td>
+                                    <td><%= element.block%></td>
+                                    <td><%= element.name%></td>
+                                    <td><%= element.age%></td>
+                                    <td><%= element.sex%></td>
+                                    <td><%= element.address%></td>
+                                    <td><%= element.contact%></td>
+                                    <td><%= element.positive_declare_date%></td>
+                                    <td><%= element.present_status%></td>
+                                   
+
+                                </tr>
+
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+
+
+
+
+
+
+        <div class="modal fade bs-example-modal-center-upload" tabindex="-1" role="dialog"
+        aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0">Upload Card File</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card m-b-30">
+                                <div class="card-body" style="background-color: #2E304A;">
+
+                                    <!-- <h4 class="mt-0 header-title">Dropzone</h4>
+                                    <p class="sub-title">DropzoneJS is an open source library
+                                        that provides drag’n’drop file uploads with image previews.
+                                    </p> -->
+
+                                    <div class="m-b-30">
+                                        <form action="/master_file_active_case" method="POST"
+                                            class="dropzone">
+                                            <div class="fallback">
+                                                <input name="link-payment-update" type="file"
+                                                    name="pfl" method='post'
+                                                    encType="multipart/form-data">
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <!-- <div class="text-center m-t-15">
+                                        <button type="button" class="btn btn-primary waves-effect waves-light">Update Payments</button>
+                                    </div> -->
+
+                                </div>
+                            </div>
+                        </div> <!-- end col -->
+                    </div> <!-- end row -->
+
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+    </div>
+    <!--end col-->
+
+
+</div><!-- container -->
+
+
+</div>
+<%- include("footer"); -%>

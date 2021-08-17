@@ -1,0 +1,143 @@
+<%- include("header",{element: element}); -%>
+
+
+<!-- Page-Title -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-right align-item-center mt-2">
+                <button class="btn btn-info px-4 align-self-center report-btn">Creat Report</button>
+            </div>
+            <h4 class="page-title mb-2"><i class="mdi mdi-monitor mr-2"></i>Add Center</h4>  
+            <div class="">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">District Covid Management</a></li>
+                    <li class="breadcrumb-item active">Add Center</li>
+                </ol>
+            </div>                                      
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+<%- include("header2"); -%>
+                <!-- Page Content-->
+                <div class="page-content" style="overflow: scroll;">
+                    <div class="container-fluid"> 
+                        <div class="row">
+                            
+                            <div class="col-lg-12">
+                                
+                                <div class="card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="alert alert-outline-danger alert-danger-shadow mb-0 alert-dismissible fade show" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true"><i class="mdi mdi-close"></i></span>
+                                                </button>
+                                                <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                                            </div>  
+                                            <div class="alert alert-outline-success alert-success-shadow mb-0 alert-dismissible fade show" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true"><i class="mdi mdi-close"></i></span>
+                                                </button>
+                                                <strong>Well done!</strong> Centre created successfully.
+                                            </div>                                         
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                    <div class="card-body">        
+                                        <h4 class="mt-0 header-title">Add Centre</h4>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <form action="/add_section.html" method="get" enctype="multipart/form-data">
+                                                    <div class="form-group row">
+                                                        <label for="example-text-input" class="col-sm-2 col-form-label text-right">Name of the facility</label>
+                                                        <div class="col-sm-10">
+                                                            <input class="form-control" type="text" name="facility_name" id="example-text-input">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-2 col-form-label text-right">Category</label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" name="category">
+                                                                <option value="">Select a Category</option>
+                                                                <option value="DCCC">DCCC</option>
+                                                                <option value="DCHC">DCHC</option>
+                                                                <option value="DCH">DCH</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="example-email-input" class="col-sm-2 col-form-label text-right">Email</label>
+                                                        <div class="col-sm-10">
+                                                            <input class="form-control" type="email" name="email" id="example-email-input">
+                                                        </div>
+                                                    </div> 
+                                                    <div class="form-group row">
+                                                        <label for="example-tel-input" class="col-sm-2 col-form-label text-right">Telephone</label>
+                                                        <div class="col-sm-10">
+                                                            <input class="form-control" type="tel" name="telephone" id="example-tel-input">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="example-password-input" class="col-sm-2 col-form-label text-right">Password</label>
+                                                        <div class="col-sm-10">
+                                                            <input class="form-control" type="password" name="password" id="example-password-input">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="example-number-input" class="col-sm-2 col-form-label text-right">No of Section</label>
+                                                        <div class="col-sm-10">
+                                                            <input class="form-control" type="number" name="section" id="example-number-input">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="example-text-input" class="col-sm-2 col-form-label text-right">Village</label>
+                                                        <div class="col-sm-10">
+                                                            <input class="form-control" type="text" name="village" id="example-text-input">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="example-text-input" class="col-sm-2 col-form-label text-right">Block</label>
+                                                        <div class="col-sm-10">
+                                                            <input class="form-control" type="text" name="block" id="example-text-input">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-12 text-right">
+                                                            <button type="submit" class="btn btn-primary">Proceed</button>
+                                                            <button type="button" class="btn btn-danger">Cancel</button>    
+                                                        </div>
+                                                    </div>  
+                                                </form>                       
+                                            </div>
+                                        </div>                                                                      
+                                    </div><!--end card-body-->
+                                </div><!--end card-->
+                            </div><!--end col-->
+                        </div><!--end row-->
+                    </div><!-- container -->
+
+                    <footer class="footer text-center text-sm-left">
+                        &copy; 2021 District Covid Management <span class="text-muted d-none d-sm-inline-block float-right">Developed by <a href="www.teceads.com">Teceads</a></span>
+
+                    </footer>
+                </div>
+                <!-- end page content -->
+            </div>
+            <!--end page-wrapper-inner -->
+        </div>
+        <!-- end page-wrapper -->
+
+        <!-- jQuery  -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/metisMenu.min.js"></script>
+        <script src="assets/js/waves.min.js"></script>
+        <script src="assets/js/jquery.slimscroll.min.js"></script>
+
+        <!-- App js -->
+        <script src="assets/js/app.js"></script>
+
+    </body>
+</html>

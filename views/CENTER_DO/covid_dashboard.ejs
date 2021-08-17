@@ -1,0 +1,152 @@
+<%- include("header",{element: element}); -%>
+
+<!-- Page-Title -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-right align-item-center mt-2">
+                <!-- <button type="button" class="btn btn-info px-4 align-self-center report-btn" data-toggle="modal"
+                    data-target=".bd-example-modal-xl">Add Patient</button> -->
+
+            </div>
+            <h4 class="page-title mb-2"><i class="mdi mdi-monitor mr-2"></i>Covid Dashboard</h4>
+            <div class="">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">District Covid Management</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+<%- include("header2"); -%>
+                <!-- Page Content-->
+                <div class="page-content" style="overflow: scroll;">
+                    <div class="container-fluid"> 
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title">Positive Cases</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark">457</h2> 
+                                                    <p class="mb-0 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>14.5%</span> Up From Last Week</p>
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-graph-line bg-soft-warning"></i>
+                                                </div>
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title">Home Isolation</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark">254</h2> 
+                                                    <p class="mb-0 text-muted"><span class="text-danger"><i class="mdi mdi-arrow-down"></i>14.5%</span> Up From Last Week</p>
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-time-reverse bg-soft-warning"></i>
+                                                </div>
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title">Death</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark">40</h2> 
+                                                    <p class="mb-0 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>14.5%</span> Up From Last Week</p>
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-warning bg-soft-danger"></i>
+                                                </div>
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                                            
+                        </div><!--end row-->
+                        
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+        
+                                        <h4 class="mt-0 header-title">Advanced Smil Animations</h4>
+                                        <p class="text-muted  mb-4 d-inline-block text-truncate w-100">Chartist provides a simple API to animate the elements on the Chart using SMIL.</p>
+        
+                                        <div id="smil-animations" class="ct-chart ct-golden-section"></div>
+        
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+        
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+        
+                                        <h4 class="mt-0 header-title">Simple pie chart</h4>
+                                        <p class="text-muted  mb-4 d-inline-block text-truncate w-100">A very simple pie chart with label
+                                            interpolation to show percentage instead of the actual data series
+                                            value.
+                                        </p>
+        
+                                        <div id="simple-pie" class="ct-chart ct-golden-section simple-pie-chart-chartist"></div>
+        
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+                    </div><!-- container -->
+                    <%- include("footer"); -%>

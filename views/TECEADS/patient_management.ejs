@@ -1,0 +1,1046 @@
+<%- include("header",{element: element}); -%>
+
+<!-- Page-Title -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-right align-item-center mt-2">
+                <button type="button" class="btn btn-info px-4 align-self-center report-btn" data-toggle="modal"
+                    data-target=".bd-example-modal-xl">Add Patient</button>
+
+            </div>
+            <h4 class="page-title mb-2"><i class="mdi mdi-monitor mr-2"></i>Dashboard</h4>
+            <div class="">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">District Covid Management</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+<%- include("header2"); -%>
+<!-- Page Content-->
+<div class="page-content" style="overflow: scroll;">
+        <div class="container" style="overflow: scroll;">
+
+
+        
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mt-0 header-title">Incoming Patient (Referrals)</h4>                                    
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead class="thead-light">
+                                    <tr>
+                                       <th>Referral Id</th>
+                                       <th>Patient</th>
+                                       <th>Referred Status</th> <th>Referrer Details</th> 
+
+                                       <th>Date</th>
+                                       <th>Centers</th>
+                                       <th>Urgency</th>
+                                       <th>Bed Category</th>
+                                       <th>Referred By</th>
+                                       <th>Referred Briefing</th>
+                                       <th>Action</th>
+                                   </tr>
+                               </thead>
+                               <tbody>
+                                   <% referral_list.forEach(element => { if(element.referred_status==="SHIFTING") {%>
+                                       <tr>
+                                           <td><%= element.referral_id%></td>
+                                           <td> <br><%= element.patient_id%> <br><%= element.patient_name%></td> 
+                                           <% if (element.referred_status === "REJECTED") { %>
+                                            <td> <span class="badge badge-boxed  badge-danger"><%= element.referred_status%></span></td>
+                                            
+                                        <% }else if (element.referred_status === "ACCEPTED" || element.referred_status === "SERVED" ){ %>
+                                            <td> <span class="badge badge-boxed  badge-success"><%= element.referred_status%></span></td>
+                                        <% } else{ %>   
+                                            <td> <span class="badge badge-boxed  badge-warning"><%= element.referred_status%></span></td>
+                                        <% } %>
+                                           <td><%= element.referral_date %></td> 
+                                           <td>From: <%= element.from_center_id%> <br>  <%= element.from_center_details %> <br> To: <%= element.to_center_id%> <br>  <%= element.to_center_details %></td> 
+                                           <td><%= element.urgency%></td> 
+                                           <td><%= element.bed_category%></td> 
+                                           <td><%= element.referred_by%></td> 
+                                           <td><%= element.referred_briefing%></td>
+                                           
+                                           <td>
+                                            <button onclick="setreadmitmodal('<%= element.referral_id%>', '<%= element.patient_id%>', '<%= element.patient_name%>')" type="button" class="btn btn-info px-4 align-self-center report-btn" data-toggle="modal"
+                                            data-target=".bd-example-modal-readmit">Add Patient</button> <br><br>
+                                            <button onclick="setnsmodal('<%= element.referral_id%>', '<%= element.patient_id%>', '<%= element.patient_name%>')" type="button" class="btn btn-info px-4 align-self-center report-btn" data-toggle="modal"
+                                                data-target=".bd-example-modal-notshowing">Not Shown</button> <br><br>
+                                        </td>
+                                       </tr>
+                                   <% }}) %>
+                                   <!-- <tr>
+                                       <th scope="row">2</th>
+                                       <td>Jacob</td>
+                                       <td>XYZ@Example.com</td>
+                                       <td><span class="badge badge-boxed  badge-warning">Personal</span>
+                                       </td>
+                                   </tr> -->
+                                </tbody>
+                            </table>
+                            <!--end /table-->
+                        </div>
+                        <!--end /tableresponsive-->
+                    </div>
+                    <!--end card-body-->
+                </div>
+                <!--end card-->
+            </div> <!-- end col -->
+        
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mt-0 header-title">Active Patient List</h4>
+                        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive "
+                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Patient Id</th>
+                                    <th>Patient Name</th>
+                                    <th class='notexport'>Action</th>
+                                    <th>Age</th>
+                                    <th>Sex</th>
+                                    <th>S/D/F/W Of</th>
+                                    <th>Adress</th>
+                                    <th>Village</th>
+                                    <th>Block</th>
+                                    <th>Telephone</th>
+                                    <th>Alt Telephone</th>
+                                    <th>Covid Status</th>
+                                    <th>Covid Report</th>
+                                    <th>Co Morbiditie</th>
+                                    <th>Travel History</th>
+                                    <th>Positive Declare Date</th>
+                                    <th>Admission Date</th>
+                                    <th>Section</th>
+                                    <th>Bed No</th>
+                                    
+
+                                </tr>
+                            </thead>
+                           
+                            <tbody>
+                                <% patients_list.forEach(element => { if(element.discharge_status==="ACTIVE") { %>
+                                <tr>
+                                    <td><%= element.patient_id%></td>
+                                    <td><%= element.patient_name%></td>
+                                    <td>
+                                        <button onclick="setdischargemodal('<%= element.patient_id%>', '<%= element.patient_name%>')" href="#custom-modal" class="btn btn-info px-4 align-self-center report-btn" data-animation="blur" data-plugin="custommodal"  data-overlaycolor="#38414a" title="Discharge">Discharge</button> <br> <br>
+                                        <button onclick="setheathtrecordmodal('<%= element.patient_id%>', '<%= element.patient_name%>')" href="#custom-modal-health-record" class="btn btn-info px-4 align-self-center report-btn" data-animation="blur" data-plugin="custommodal"  data-overlaycolor="#38414a" title="Discharge">Health Record</button><br><br>
+                                        <button onclick="setshiftmodal('<%= element.patient_id%>', '<%= element.patient_name%>', '<%= element.active_bed_details.section_id%>')" href="#custom-modal-shift-section" class="btn btn-info px-4 align-self-center report-btn" data-animation="blur" data-plugin="custommodal"  data-overlaycolor="#38414a" title="Discharge">Shift Bed/Section</button> <br><br>
+                                        <button onclick="setrefermodal('<%= element.patient_id%>', '<%= element.patient_name%>', '<%= element.active_bed_details.center_id%>')" href="#custom-modal-refer" class="btn btn-info px-4 align-self-center report-btn" data-animation="blur" data-plugin="custommodal"  data-overlaycolor="#38414a" title="Discharge">Refer</button>
+                                       
+                                    </td>
+                                    <td><%= element.age%></td>
+                                    <td><%= element.sex%></td>
+                                    <td><%= element.s_d_w_of%></td>
+                                    <td><%= element.address%></td>
+                                    <td><%= element.village%></td>
+                                    <td><%= element.block%></td>
+                                    <td><%= element.telephone%></td>
+                                    <td><%= element.alt_telephone%></td>
+                                    <td><%= element.covid_status%></td>
+                                    <td><%= element.covid_report%></td>
+                                    <td><%= element.co_morbidities%></td>
+                                    <td><%= element.travel_history%></td>
+                                    <td><%= element.positive_declare_date%></td>
+                                    <td><%= element.admission_date%></td>
+                                    <td><%= element.active_bed_details.section_id%></td>
+                                    <td><%= element.active_bed_details.bed_no%></td>
+
+                                </tr>
+
+                                <% }}) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+
+
+
+
+        <!-- sample modal content -->
+        <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0" id="myModalLabel">Patient Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/add_patient" method="POST">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group row">
+                                        <label for="example-text-input"
+                                            class="col-sm-3 col-form-label text-right">Patient Name</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" name="patient_name"
+                                                id="example-text-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-number-input"
+                                            class="col-sm-3 col-form-label text-right">Age</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="number" name="age"
+                                                id="example-number-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label text-right">Sex</label>
+                                        <div class="col-sm-9">
+                                            <select required class="form-control" name="sex">
+                                                <option value="">Select a field</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Others">Others</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-number-input" class="col-sm-3 col-form-label text-right">S /
+                                            W / D of</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" name="s_d_w_of"
+                                                id="example-number-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-number-input"
+                                            class="col-sm-3 col-form-label text-right">Address</label>
+                                        <div class="col-sm-9">
+                                            <textarea required class="form-control" name="address" id="" cols="30" rows="2"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-text-input"
+                                            class="col-sm-3 col-form-label text-right">Village / City / NAC</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" name="village"
+                                                id="example-text-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-text-input"
+                                            class="col-sm-3 col-form-label text-right">Block</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" name="block"
+                                                id="example-text-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-tel-input"
+                                            class="col-sm-3 col-form-label text-right">Contact</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="tel" name="telephone"
+                                                id="example-tel-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-tel-input"
+                                            class="col-sm-3 col-form-label text-right">Referral Details</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" name="referrals"
+                                                id="example-tel-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input" class="col-sm-3 col-form-label text-right">Alt.
+                                            Contact</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="tel" name="alt_telephone"
+                                                id="example-tel-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label text-right">Covid Position (Y/N) during
+                                            admission
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <select required class="form-control" name="covid_status">
+                                                <option value="">Select a field</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="NA">N/A</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label text-right">Covid Report (+ve / -ve)
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <select required class="form-control" name="covid_report">
+                                                <option value="">Select a field</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="NA">N/A</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-number-input"
+                                            class="col-sm-3 col-form-label text-right">Date of Declaration
+                                            as Covid +Ve
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="date" name="positive_declare_date"
+                                                id="example-number-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-number-input"
+                                            class="col-sm-3 col-form-label text-right">Date of Admission
+                                            
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="date" name="admission_date"
+                                                id="example-number-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-number-input"
+                                            class="col-sm-3 col-form-label text-right">Details regarding
+                                            Co-morbidities
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <textarea required class="form-control" class="form-control" name="co_morbidities" id="" cols="30"
+                                                rows="2"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label text-right">History of Travel/Contact
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <select required class="form-control" name="travel_history">
+                                                <option value="">Select a field</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="NA">N/A</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-lg-12">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title mt-0" id="myModalLabel">Bed Details</h5>
+                                </div>
+                                </div>
+                                <div class="col-lg-4">                                <br>
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input" class="col-sm-3 col-form-label text-right">Center</label>
+                                        <div class="col-sm-9">
+                                            <select required class="form-control" type="text" name="center_id"
+                                                id="example-tel-input">
+                                                <option value=""> Select Hospital</option>
+
+                                                <% centers_list.forEach(element => {  %>
+                                                    <option value="<%= element.center_id%>"><%= element.center_id%> - <%= element.facility_name%>, <%= element.category%>, <%= element.village%>, <%= element.block%></option>
+                                            <% }) %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                   
+                                    
+                                    
+                                </div>
+                                <div class="col-lg-4">                                <br>
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input" class="col-sm-3 col-form-label text-right">Section</label>
+                                        <div class="col-sm-9">
+                                            <select required class="form-control" type="text" name="section_id"
+                                                id="example-tel-input">
+                                                <option value=""> Select</option>
+
+                                                <% section_list.forEach(element => {  %>
+                                                    <option value="<%= element.section_id%>"><%= element.section_id%>-<%= element.center_id%> - <%= element.category%>, <%= element.room_name%></option>
+                                            <% }) %></select>
+                                        </div>
+                                    </div>
+                                    
+                                   
+                                    
+                                    
+                                </div>
+                                <div class="col-lg-4">                                <br>
+
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input" class="col-sm-3 col-form-label text-right">Bed No</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" name="bed_no"
+                                                id="example-tel-input">
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-12 text-right">
+                                            <button type="submit" class="btn btn-primary">Add Patient</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                    </div>
+                    </form>
+
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+        <!-- sample modal content -->
+        <div class="modal fade bd-example-modal-readmit" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0" id="myModalLabel">Patient Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/admit_patient_referral" method="POST">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group row">
+                                        <label for="example-text-input"
+                                            class="col-sm-3 col-form-label text-right">Referral ID</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" readonly name="referral_id"
+                                                id="referral_id_rd">
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group row">
+                                        <label for="example-text-input"
+                                            class="col-sm-3 col-form-label text-right">Patient ID</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" readonly name="patient_id"
+                                                id="patient_id_rd">
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group row">
+                                        <label for="example-text-input"
+                                            class="col-sm-3 col-form-label text-right">Patient Name</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" readonly name="patient_name"
+                                                id="patient_name_rd">
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-lg-4">
+
+                                    
+                                    <div class="form-group row">
+                                        <label for="example-number-input"
+                                            class="col-sm-3 col-form-label text-right">Date of Admission
+                                            
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="date" name="admission_date"
+                                                id="example-number-input">
+                                        </div>
+                                    </div>
+                                   
+                                    
+                                </div>
+                                <div class="col-lg-12">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title mt-0" id="myModalLabel">Bed Details</h5>
+                                </div>
+                                </div>
+                                <div class="col-lg-4">                                <br>
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input" class="col-sm-3 col-form-label text-right">Center</label>
+                                        <div class="col-sm-9">
+                                            <select required class="form-control" type="text" name="center_id"
+                                                id="example-tel-input">
+                                                <option value=""> Select Hospital</option>
+
+                                                <% centers_list.forEach(element => {  %>
+                                                    <option value="<%= element.center_id%>"><%= element.center_id%> - <%= element.facility_name%>, <%= element.category%>, <%= element.village%>, <%= element.block%></option>
+                                            <% }) %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                   
+                                    
+                                    
+                                </div>
+                                <div class="col-lg-4">                                <br>
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input" class="col-sm-3 col-form-label text-right">Section</label>
+                                        <div class="col-sm-9">
+                                            <select required class="form-control" type="text" name="section_id"
+                                                id="example-tel-input">
+                                                <option value=""> Select</option>
+
+                                                <% section_list.forEach(element => {  %>
+                                                    <option value="<%= element.section_id%>"><%= element.section_id%>-<%= element.center_id%> - <%= element.category%>, <%= element.room_name%></option>
+                                            <% }) %></select>
+                                        </div>
+                                    </div>
+                                    
+                                   
+                                    
+                                    
+                                </div>
+                                <div class="col-lg-4">                                <br>
+
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input" class="col-sm-3 col-form-label text-right">Bed No</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" name="bed_no"
+                                                id="example-tel-input">
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-12 text-right">
+                                            <button type="submit" class="btn btn-primary">Add Patient</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                    </div>
+                    </form>
+
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+       <!-- sample modal content -->
+       <div class="modal fade bd-example-modal-notshowing" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+       aria-hidden="true">
+       <div class="modal-dialog modal-xl">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title mt-0" id="myModalLabel">Patient Details</h5>
+                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+               </div>
+               <div class="modal-body">
+                   <form action="/notshown_patient_referral" method="POST">
+                       <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="example-text-input"
+                                    class="col-sm-3 col-form-label text-right">Referral ID</label>
+                                <div class="col-sm-9">
+                                    <input required class="form-control" type="text" readonly name="referral_id"
+                                        id="referral_id_ns">
+                                </div>
+                            </div>
+                            
+                        </div>
+                           <div class="col-lg-4">
+                               <div class="form-group row">
+                                   <label for="example-text-input"
+                                       class="col-sm-3 col-form-label text-right">Patient ID</label>
+                                   <div class="col-sm-9">
+                                       <input required class="form-control" type="text" readonly name="patient_id"
+                                           id="patient_id_ns">
+                                   </div>
+                               </div>
+                               
+                           </div>
+                           <div class="col-lg-4">
+                               <div class="form-group row">
+                                   <label for="example-text-input"
+                                       class="col-sm-3 col-form-label text-right">Patient Name</label>
+                                   <div class="col-sm-9">
+                                       <input required class="form-control" type="text" readonly name="patient_name"
+                                           id="patient_name_ns">
+                                   </div>
+                               </div>
+                               
+                           </div>
+                           <div class="col-lg-4">
+
+                               
+                               <div class="form-group row">
+                                   <label for="example-number-input"
+                                       class="col-sm-3 col-form-label text-right">Explanation
+                                       
+                                   </label>
+                                   <div class="col-sm-9">
+                                       <input required class="form-control" type="text" name="discharge_brefing"
+                                           id="example-number-input">
+                                   </div>
+                               </div>
+                              
+                               
+                           </div>
+
+                               
+                               
+                               <div class="row">
+                                   <div class="col-sm-12 text-right">
+                                       <button type="submit" class="btn btn-primary">submit</button>
+                                   </div>
+                               </div>
+                           </div>
+
+                           
+                       </div>
+               </div>
+               </form>
+
+           </div>
+
+       </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+    <div id="custom-modal" class="modal-demo">
+        <button type="button" class="close" onclick="Custombox.modal.close();"><span>×</span><span
+                class="sr-only">Close</span></button>
+        <div class="card">
+            <div class="card-body">        
+                <h4 class="mt-0 header-title">Discharge Summery</h4>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form action="/discharge_patient" method="post">
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-2 col-form-label text-right">Patient ID</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="patient_id" id="p_id" readonly required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label text-right">Name</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="patient_name" id="p_name" readonly required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Discharge Type</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="discharge_status" required>
+                                        <option value="">Select a Category</option>
+                                        <option value="DISCHARGED">Safe Discharge</option>
+                                        <option value="DEATH">Death</option>
+                                    </select>                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="example-tel-input" class="col-sm-2 col-form-label text-right">Discharge Date</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="date" name="discharge_date" id="example-tel-input" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-2 col-form-label text-right">Discharge Briefing</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="discharge_brefing" id="example-text-input" required>
+                                </div>
+                            </div>
+                            
+                                
+                                
+                                
+                                
+                            <div class="row">
+                                <div class="col-sm-12 text-right">
+                                    <button type="submit" class="btn btn-primary">Conform Discharge</button>
+                                </div>
+                            </div>  
+                        </form>                       
+                    </div>
+                </div>                                                                      
+            </div><!--end card-body-->
+            <!--end card-body-->
+        </div>
+    </div>
+
+    <div id="custom-modal-health-record" class="modal-demo">
+        <button type="button" class="close" onclick="Custombox.modal.close();"><span>×</span><span
+                class="sr-only">Close</span></button>
+        <div class="card">
+            <div class="card-body">        
+                <h4 class="mt-0 header-title">Add Health Record</h4>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form action="/add_health_record" method="post">
+                            <!-- date: [],
+                            time: [],
+                            section_id: [],
+                            bp: [],
+                            spo2: [],
+                            pulse: [],
+                            temperature: [],
+                            condition: [] -->
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-2 col-form-label text-right">Patient ID</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="patient_id" id="p_id_hr" readonly required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label text-right">Name</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="patient_name" id="p_name_hr" readonly required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Date</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="date" name="date" id="example-tel-input" required>
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Time</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" type="text" name="time" id="example-tel-input" required>
+                                        <option value="">Select</option>
+                                        <option value="MORNING">Morning</option>
+                                        <option value="AFTERNOON">Afternoon</option>
+                                        <option value="EVENING">Evening</option>
+                                        <option value="NIGHT">Night</option>
+                                    </select>
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">SpO2</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="number" name="spo2" id="example-tel-input" required>
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="example-tel-input" class="col-sm-2 col-form-label text-right">Blood Pressure</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="bp" id="example-tel-input" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-2 col-form-label text-right">Pulse Rate</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="number" name="pulse" id="example-text-input" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-2 col-form-label text-right">Temp</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="number" name="temperature" id="example-text-input" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-2 col-form-label text-right">Condition</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" type="text" name="condition" id="example-text-input" required>
+                                        <option value=""> Select</option>
+                                        <option value="STABLE"> STABLE</option>
+                                        <option value="PROGRESSING"> PROGRESSING</option>
+                                        <option value="DETERIORATING"> DETERIORATING</option>
+                                        <option value="CRITICAL"> CRITICAL</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                                
+                                
+                                
+                                
+                            <div class="row">
+                                <div class="col-sm-12 text-right">
+                                    <button type="submit" class="btn btn-primary">Add Record</button>
+                                </div>
+                            </div>  
+                        </form>                       
+                    </div>
+                </div>                                                                      
+            </div><!--end card-body-->
+            <!--end card-body-->
+        </div>
+    </div>
+
+    
+    <div id="custom-modal-shift-section" class="modal-demo">
+        <button type="button" class="close" onclick="Custombox.modal.close();"><span>×</span><span
+                class="sr-only">Close</span></button>
+        <div class="card">
+            <div class="card-body">        
+                <h4 class="mt-0 header-title">Shift Room/Section</h4>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form action="/shift_patient_section" method="post">
+                            <!-- date: [],
+                            time: [],
+                            section_id: [],
+                            bp: [],
+                            spo2: [],
+                            pulse: [],
+                            temperature: [],
+                            condition: [] -->
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-2 col-form-label text-right">Patient ID</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="patient_id" id="p_id_sft" readonly required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label text-right">Name</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="patient_name" id="p_name_sft" readonly required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Date</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="date" name="date" id="example-tel-input" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-2 col-form-label text-right">From Section</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text"  name="from_section_id" id="from_section_id" readonly required>
+                                      
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-2 col-form-label text-right">To Section</label>
+                                <div class="col-sm-10">
+                                    <select required class="form-control" type="text" name="to_section_id"
+                                                id="example-tel-input">
+                                                <option id="exsiting_section_id" value=""> </option>
+
+                                                <% section_list.forEach(element => {  %>
+                                                    <option value="<%= element.section_id%>"><%= element.section_id%>-<%= element.center_id%> - <%= element.category%>, <%= element.room_name%></option>
+                                            <% }) %></select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Bed No</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="number" name="bed_no" id="example-tel-input" required>
+                                </div>
+                            </div> 
+                            
+                                
+                                
+                                
+                                
+                            <div class="row">
+                                <div class="col-sm-12 text-right">
+                                    <button type="submit" class="btn btn-primary">Shift Patient</button>
+                                </div>
+                            </div>  
+                        </form>                       
+                    </div>
+                </div>                                                                      
+            </div><!--end card-body-->
+            <!--end card-body-->
+        </div>
+    </div>
+
+    <div id="custom-modal-refer" class="modal-demo">
+        <button type="button" class="close" onclick="Custombox.modal.close();"><span>×</span><span
+                class="sr-only">Close</span></button>
+        <div class="card">
+            <div class="card-body">        
+                <h4 class="mt-0 header-title">Refer To Other Hospitals</h4>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form action="/add_referral" method="post">
+                            <!-- date: [],
+                            time: [],
+                            section_id: [],
+                            bp: [],
+                            spo2: [],
+                            pulse: [],
+                            temperature: [],
+                            condition: [] -->
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-2 col-form-label text-right">Patient ID</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="patient_id" id="p_id_refer" readonly required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label text-right">Name</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="patient_name" id="p_name_refer" readonly required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Date</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="date" name="date" id="example-tel-input" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-2 col-form-label text-right">From Hospital</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text"  name="from_center_id" id="from_center_id" readonly required>
+                                      
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-2 col-form-label text-right">To Hospital</label>
+                                <div class="col-sm-10">
+                                    <select required class="form-control" type="text" name="to_center_id"
+                                                id="example-tel-input">
+                                                <option value=""> Select Hospital</option>
+
+                                                <% centers_list.forEach(element => {  %>
+                                                    <option value="<%= element.center_id%>"><%= element.center_id%> - <%= element.facility_name%>, <%= element.category%>, <%= element.village%>, <%= element.block%></option>
+                                            <% }) %></select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Urgency</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control"  name="urgency" id="example-tel-input" required>
+                                        <option value="NOT_URGENT"> Not Urgent</option>
+                                        <option value="URGENT">Urgent</option>
+                                        </select>
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Bed Category</label>
+                                <div class="col-sm-10">
+                                    <select required class="form-control" type="text" name="bed_category"
+                                    id="example-tel-input">
+                                    <option value=""> Select</option>
+                                    <option value="ISOLATION_BED"> Isolation Bed</option>
+                                    <option value="GENERAL_BED"> General Bed</option>
+                                    <option value="OXYGEN_BED"> Oxygen Bed</option>
+                                    <option value="HDU_BED"> HDU Bed (Highly Dependent Unit)</option>
+                                    <option value="ICU_BED"> ICU Bed (WITHOUT VENTILATOR)</option>
+                                    <option value="VENTILATOR_BED"> Ventilator_</option>
+
+                                   </select>
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Referred By</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="referred_by" id="example-tel-input" required>
+                                        
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Refer Briefing</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" type="text" name="referred_briefing" id="example-tel-input" cols="30" rows="2" required>
+
+                                    </textarea>
+                                </div>
+                            </div> 
+                            
+                            <div class="row">
+                                <div class="col-sm-12 text-right">
+                                    <button type="submit" class="btn btn-primary">Refer Patient</button>
+                                </div>
+                            </div>  
+                        </form>                       
+                    </div>
+                </div>                                                                      
+            </div><!--end card-body-->
+            <!--end card-body-->
+        </div>
+    </div>
+
+
+    <script>
+        function setdischargemodal(p_id,p_name) {
+            document.getElementById("p_id").value = p_id;
+            document.getElementById("p_name").value = p_name;
+            
+        }
+
+        function setheathtrecordmodal(p_id,p_name) {
+            document.getElementById("p_id_hr").value = p_id;
+            document.getElementById("p_name_hr").value = p_name;
+            
+        }
+        function setreadmitmodal(r_id,p_id,p_name) {
+            document.getElementById("referral_id_rd").value = r_id;
+            document.getElementById("patient_id_rd").value = p_id;
+            document.getElementById("patient_name_rd").value = p_name;
+            
+        }
+        function setnsmodal(r_id,p_id,p_name) {
+            document.getElementById("referral_id_ns").value = r_id;
+            document.getElementById("patient_id_ns").value = p_id;
+            document.getElementById("patient_name_ns").value = p_name;
+            
+        }
+        
+        function setshiftmodal(p_id,p_name,p_section) {
+            document.getElementById("p_id_sft").value = p_id;
+            document.getElementById("p_name_sft").value = p_name;
+            document.getElementById("from_section_id").value = p_section;
+            document.getElementById("exsiting_section_id").value = p_section;
+            document.getElementById("exsiting_section_id").innerHTML = p_section;
+            
+        }
+
+        function setrefermodal(p_id,p_name,p_center) {
+            document.getElementById("p_id_refer").value = p_id;
+            document.getElementById("p_name_refer").value = p_name;
+            document.getElementById("from_center_id").value = p_center;
+            
+        }
+    </script>
+
+
+
+</div>
+<!--end col-->
+
+
+
+
+</div><!-- container -->
+
+
+</div>
+<%- include("footer"); -%>

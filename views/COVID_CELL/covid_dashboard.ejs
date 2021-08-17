@@ -1,0 +1,482 @@
+<%- include("header",{element: element}); -%>
+
+<!-- Page-Title -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-right align-item-center mt-2">
+                <!-- <button type="button" class="btn btn-info px-4 align-self-center report-btn" data-toggle="modal"
+                    data-target=".bd-example-modal-xl">Add Patient</button> -->
+
+            </div>
+            <h4 class="page-title mb-2"><i class="mdi mdi-monitor mr-2"></i>Covid Dashboard</h4>
+            <div class="">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">District Covid Management</a></li>
+                    <li class="breadcrumb-item active">Covid Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+<%- include("header2"); -%>
+                <!-- Page Content-->
+                <div class="page-content" style="overflow: scroll;">
+                    <div class="container-fluid"> 
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title">Total Cases</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark"><%= header_data.total_cases %></h2> 
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                            
+                                            <!-- <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-graph-line bg-soft-warning"></i>
+                                                </div>
+                                            </div> -->
+                                            <!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            <div class="col-lg-3">
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title">Active Cases</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark"><%= header_data.active_patient %></h2> 
+                                                    <!-- <p class="mb-0 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>14.5%</span> Up From Last Week</p> -->
+                                                </div>
+                                            </div><!--end col-->
+                                            <!-- <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-graph-line bg-soft-warning"></i>
+                                                </div>
+                                            </div> -->
+                                            <!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            <div class="col-lg-3">
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title">Home Isolation</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark"><%= header_data.home_isolation %></h2> 
+                                                    <!-- <p class="mb-0 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>14.5%</span> Up From Last Week</p> -->
+                                                </div>
+                                            </div><!--end col-->
+                                            <!-- <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-graph-line bg-soft-warning"></i>
+                                                </div>
+                                            </div> -->
+                                            <!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            <div class="col-lg-3">
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title">District Hospitals</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark"><%= header_data.hospital %></h2> 
+                                                    <!-- <p class="mb-0 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>14.5%</span> Up From Last Week</p> -->
+                                                </div>
+                                            </div><!--end col-->
+                                            <!-- <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-graph-line bg-soft-warning"></i>
+                                                </div>
+                                            </div> -->
+                                            <!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            
+                            <div class="col-lg-3">
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title">Discharge</h4> <br>
+                                                    <h2 class="mt-0 font-weight-bold text-dark"><%= header_data.discharged_patient %></h2> 
+                                                    <!-- <p class="mb-0 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>14.5%</span> Up From Last Week</p> -->
+                                                </div>
+                                            </div><!--end col-->
+                                            <!-- <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-graph-line bg-soft-warning"></i>
+                                                </div>
+                                            </div> -->
+                                            <!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            <div class="col-lg-3">
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title">Death</h4> <br>
+                                                    <h2 class="mt-0 font-weight-bold text-dark"><%= header_data.death %></h2> 
+                                                    <!-- <p class="mb-0 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>14.5%</span> Up From Last Week</p> -->
+                                                </div>
+                                            </div><!--end col-->
+                                            <!-- <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-graph-line bg-soft-warning"></i>
+                                                </div>
+                                            </div> -->
+                                            <!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            
+                           
+                           
+                           
+                                            
+                        </div><!--end row-->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title mt-0 mb-4">Daily Cases</h4>
+                                        <div class="chart-demo">
+                                            <div id="apex_line1" class="apex-charts"></div>
+                                        </div>                                        
+                                    </div><!--end card-body-->
+                                </div><!--end card-->
+                            </div><!--end col-->
+                        </div><!--end row-->
+
+                        <div class="row" style="display: none">
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title mt-0 mb-4">Irregular TimeSeries</h4>
+                                        <div class="chart-demo">
+                                            <div id="apex_area1" class="apex-charts"></div>
+                                        </div>                                        
+                                    </div><!--end card-body-->
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title mt-0 mb-4">Area Chart - Datetime X-axis</h4>
+                                        <div class="chart-demo">
+                                            <div class="toolbar">
+                                                <button class="btn btn-sm btn-success" id="one_month">1M</button>
+                                                <button class="btn btn-sm btn-success" id="six_months">6M</button>
+                                                <button class="btn btn-sm btn-success" id="one_year" class="active">1Y</button>
+                                                <button class="btn btn-sm btn-success" id="ytd">YTD</button>
+                                                <button class="btn btn-sm btn-success" id="all">ALL</button>
+                                            </div>
+                                            <div id="apex_area2" class="apex-charts"></div>
+                                        </div>                                        
+                                    </div><!--end card-body-->
+                                </div><!--end card-->
+                            </div><!--end col-->
+                        </div><!--end row-->
+
+                        <div class="row">
+                            
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title mt-0 mb-4">Block Wise Chart</h4>
+                                        <div class="chart-demo">
+                                            <div id="apex_column1" class="apex-charts"></div>
+                                        </div>                                        
+                                    </div><!--end card-body-->
+                                </div><!--end card-->
+                            </div><!--end col-->
+                                                  
+                        </div><!--end row-->
+
+
+                        <footer class="footer text-center text-sm-left">
+                            &copy; 2021 District Covid Management <span class="text-muted d-none d-sm-inline-block float-right">Developed by <a href="www.teceads.com">Teceads</a></span>
+                          </footer>
+                </div>
+                <!-- end page content --><%-  %> 
+            </div>
+            <!--end page-wrapper-inner -->
+        </div>
+        <!-- end page-wrapper -->
+
+        <!-- jQuery  -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/metisMenu.min.js"></script>
+        <script src="assets/js/waves.min.js"></script>
+        <script src="assets/js/jquery.slimscroll.min.js"></script>
+
+        <script src="assets/plugins/moment/moment.js"></script>
+
+        <script src="assets/plugins/apexcharts/apexcharts.min.js"></script>
+        <script src="https://apexcharts.com/samples/assets/irregular-data-series.js"></script>
+        <script src="https://apexcharts.com/samples/assets/ohlc.js"></script>
+        <script src="assets/pages/jquery.apexcharts.init.js"></script>
+
+<script>
+    var patient_count_daily_count = <%-JSON.stringify(patient_count_daily_count)%>;
+    var patient_count_daily_date = <%-JSON.stringify(patient_count_daily_date)%>;
+
+var options = {
+    chart: {
+      height: 374,
+      type: 'line',
+      shadow: {
+        enabled: false,
+        color: '#bbb',
+        top: 3,
+        left: 2,
+        blur: 3,
+        opacity: 1
+      },
+    },
+    stroke: {
+      width: 5,
+      curve: 'smooth'
+    },
+    series: [{
+      name: 'Cases',
+      data: <%-JSON.stringify(patient_count_daily_count)%>
+    }],
+    xaxis: {
+      type: 'datetime',
+      categories: <%-JSON.stringify(patient_count_daily_date)%> ,
+    },
+    title: {
+      text: 'Ganjam Active Cases',
+      align: 'left',
+      style: {
+        fontSize: "16px",
+        color: '#666'
+      }
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shade: 'dark',
+        gradientToColors: ['#43cea2'],
+        shadeIntensity: 1,
+        type: 'horizontal',
+        opacityFrom: 1,
+        opacityTo: 1,
+        stops: [0, 100, 100, 100]
+      },
+    },
+    markers: {
+      size: 4,
+      opacity: 0.9,
+      colors: ["#ffbc00"],
+      strokeColor: "#fff",
+      strokeWidth: 2,
+      style: 'inverted', // full, hollow, inverted
+      hover: {
+        size: 7,
+      }
+    },
+    yaxis: {
+      min: -10,
+      max: 350,
+      title: {
+        text: 'Engagement',
+      },
+    },
+    grid: {
+      row: {
+        colors: ['transparent', 'transparent'], // takes an array which will be repeated on columns
+        opacity: 0.2
+      },
+      borderColor: '#185a9d'
+    },
+    responsive: [{
+      breakpoint: 600,
+      options: {
+        chart: {
+          toolbar: {
+            show: false
+          }
+        },
+        legend: {
+          show: false
+        },
+      }
+    }]
+  }
+  
+  var chart = new ApexCharts(
+    document.querySelector("#apex_line1"),
+    options
+  );
+  
+  chart.render();
+
+
+    //colunm-1
+  
+var options = {
+    chart: {
+        height: 396,
+        type: 'bar',
+        toolbar: {
+            show: false
+        }
+    },
+    plotOptions: {
+        bar: {
+            horizontal: false,
+            endingShape: 'rounded',
+            columnWidth: '55%',
+        },
+    },
+    dataLabels: {
+        enabled: false
+    },
+    stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+    },
+    colors: ["#5766da", "#1ecab8", "#fbb624"],
+    series: [{
+        name: 'TOTAL CASES',
+        data:  <%-JSON.stringify(block_total_cases)%>
+    }, {
+        name: 'ACTIVE CASES',
+        data:  <%-JSON.stringify(block_active_cases)%>
+    }],
+    xaxis: {
+        categories:  <%-JSON.stringify(block_name)%>,
+    },
+    legend: {
+        offsetY: -10,
+    },
+    yaxis: {
+        title: {
+            text: ' '
+        }
+    },
+    fill: {
+        opacity: 1
+
+    },
+    // legend: {
+    //     floating: true
+    // },
+    grid: {
+        row: {
+            colors: ['transparent', 'transparent'], // takes an array which will be repeated on columns
+            opacity: 0.2
+        },
+        borderColor: '#f1f3fa'
+    },
+    tooltip: {
+        y: {
+            formatter: function (val) {
+                return " " + val + ""
+            }
+        }
+    }
+}
+
+var chart = new ApexCharts(
+    document.querySelector("#apex_column1"),
+    options
+);
+
+chart.render();
+
+
+</script>
+        <!-- App js -->
+        <script src="assets/js/app.js"></script>
+
+    </body>
+</html>

@@ -1,0 +1,272 @@
+<%- include("header",{element: element}); -%>
+
+
+<!-- Page-Title -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-right align-item-center mt-2">
+                <!-- <a href="#custom-modal" class="btn btn-info px-4 align-self-center report-btn" data-animation="blur" data-plugin="custommodal" data-overlaycolor="#38414a">Add User</a> -->
+            </div>
+            <h4 class="page-title mb-2"><i class="mdi mdi-monitor mr-2"></i>Referrals</h4>
+            <div class="">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">District Covid Management</a></li>
+                    <li class="breadcrumb-item active">Referrals</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+<%- include("header2"); -%>
+<!-- Page Content-->
+<div class="page-content" style="overflow: scroll;">
+        <div class="container" style="overflow: scroll;">
+
+        <div class="row">     
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mt-0 header-title">Pending RRT Referrals</h4>
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Referral Id</th>
+                                        <th>Patient</th>
+                                        <th>Date</th>
+                                        <th>Centers</th>
+                                        <th>Urgency</th>
+                                        <th>Bed Category</th>
+                                        <th>Referred By</th>
+                                        <th>Referred Briefing</th>
+                                        <th>Referred Status</th> <th>Referrer Details</th> 
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% referral_list.forEach(element => { if(element.referred_status==="ACTIVE" && element.from_center_id==="RRT") {%>
+                                    <tr>
+                                        <td><%= element.referral_id%></td>
+                                        <td> <br><%= element.patient_id%> <br><%= element.patient_name%></td>
+                                        <td><%= element.referral_date %>
+                                        </td>
+                                        <td>From: <%= element.from_center_id%> <br>  <%= element.from_center_details %></td>
+                                        <td><%= element.urgency%></td>
+                                        <td><%= element.bed_category%></td>
+                                        <td><%= element.referred_by%></td>
+                                        <td><%= element.referred_briefing%></td>
+                                         <% if (element.referred_status === "REJECTED") { %>
+                                                        <td> <span class="badge badge-boxed  badge-danger"><%= element.referred_status%></span></td>
+                                                        
+                                                    <% }else if (element.referred_status === "ACCEPTED" || element.referred_status === "SERVED" ){ %>
+                                                        <td> <span class="badge badge-boxed  badge-success"><%= element.referred_status%></span></td>
+                                                    <% } else{ %>   
+                                                                                                                <td> <span class="badge badge-boxed  badge-warning"><%= element.referred_status%></span></td>
+                                                    <% } %>
+                                                    <td><%= element.referrer_details.name%> <br><%= element.referrer_details.phonenumber%> </td>
+                                        <td>
+                                            <button onclick="setreferacceptmodal('<%= element.referral_id %>')"
+                                                href="#custom-modal-refer-accept-rrt"
+                                                class="btn btn-info px-4 align-self-center report-btn"
+                                                data-animation="blur" data-plugin="custommodal"
+                                                data-overlaycolor="#38414a" title="Discharge">Accept</button><br><br>
+
+                                        </td>
+                                    </tr>
+                                    <% }}) %>
+                                    <!-- <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>Jacob</td>
+                                                    <td>XYZ@Example.com</td>
+                                                    <td><span class="badge badge-boxed  badge-warning">Personal</span>
+                                                    </td>
+                                                </tr> -->
+                                </tbody>
+                            </table>
+                            <!--end /table-->
+                        </div>
+                        <!--end /tableresponsive-->
+                    </div>
+                    <!--end card-body-->
+                </div>
+                <!--end card-->
+            </div> <!-- end col -->
+            
+            <!--end card-->
+        </div> 
+    </div> 
+
+    <div id="custom-modal-refer-accept" class="modal-demo">
+        <button type="button" class="close" onclick="Custombox.modal.close();"><span>×</span><span
+                class="sr-only">Close</span></button>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="mt-0 header-title">Accept Referral</h4>
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <form action="/accept_referral" method="post">
+
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-2 col-form-label text-right">Referral
+                                    ID</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="referral_id" id="r_id_refer_accept"
+                                        readonly required>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Expected Bed
+                                    No</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="bed_number" id="example-tel-input"
+                                        cols="30" rows="2" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Notes if
+                                    Any</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" type="text" name="notes" id="example-tel-input"
+                                        cols="30" rows="2" required></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 text-right">
+                                    <button type="submit" class="btn btn-primary">Accept Referrals</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--end card-body-->
+            <!--end card-body-->
+        </div>
+    </div>
+
+
+    <div id="custom-modal-refer-accept-rrt" class="modal-demo">
+        <button type="button" class="close" onclick="Custombox.modal.close();"><span>×</span><span
+                class="sr-only">Close</span></button>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                      
+                        <h4 class="mt-0 header-title">Hospital Availability Table</h4>
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Center Details</th>
+                                        <th>Overall Bed</th>
+                                        <th>General Bed</th>
+                                        <th>Isolation Bed</th>
+                                        <th >Oxygen Bed</th>
+                                        <th>HDU Bed</th>
+                                        <th>ICU Bed</th>
+                                        <th>Ventilator_</th>
+                                       
+                                        
+                                    </tr>
+                                    </thead>
+                                    
+                                    
+
+                                    <tbody >
+
+                                        <% hospital_list.forEach(element => {  %>
+                                            
+                                            <tr>
+                                                <td> <%= element.hospital.facility_name%> <br><%= element.hospital.category%> - <%= element.hospital.block%><br><%= element.hospital.center_id%> </td>
+                                                <td><strong><%= element.total_bed_available-element.total_bed_occupied%></strong> </td>
+                                                <td><%= element.hospital.no_general_bed-element.total_general_bed_occupied%> </td>
+                                                <td><%= element.hospital.no_isolation_bed-element.total_isolation_bed_occupied%> </td>
+                                                <td><%= element.hospital.no_oxygen_bed-element.total_oxygen_bed_occupied%></td>
+                                                <td><%= element.hospital.no_hdu_bed-element.total_hdu_bed_occupied%> </td>
+                                                <td><%= element.hospital.no_icu_bed-element.total_icu_bed_occupied+element.hospital.no_ventilator-element.total_ventilator_bed_occupied%> </td>
+                                                <td><%=  element.hospital.no_ventilator-element.total_ventilator_bed_occupied%> </td> 
+                                                                                          
+                                            </tr>
+                                            
+                                        <% }) %>
+                                    </tbody>
+                            </table>
+                            <!--end /table-->
+                        </div>
+                        <!--end /tableresponsive-->
+                
+                <!--end card-->
+                <br>
+            </div> <!-- end col -->
+            <br>
+            <h4 class="mt-0 header-title">Accept Referral From RRT</h4><br>
+
+                    <div class="col-lg-12"> <br>
+                        <form action="/accept_referral_rrt_covid_cell" method="post">
+
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-2 col-form-label text-right">Referral
+                                    ID</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="referral_id" id="rrt_id_refer_accept"
+                                        readonly required>
+                                </div>
+                            </div>
+                            
+
+
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">To Center
+                                    Id</label>
+                                <div class="col-sm-10">
+                                    <select list="centers_list" type="text" class="form-control" name="centers_id"
+                                        required>
+                                            <option value="">Select
+                                            <% centers_list.forEach(element => { %>
+                                            <option value="<%= element.center_id %>">
+                                                <br><%= element.center_id%>
+                                                <br><%= element.facility_name%>
+                                                <br><%= element.category%>
+                                                <br><%= element.village%>
+                                                <br><%= element.block%></option>
+
+                                            <% }) %> 
+                                            </select>
+                                </div>
+                                </div>
+
+                            <div class="row">
+                                <div class="col-sm-12 text-right">
+                                    <button type="submit" class="btn btn-primary">Process Referrals</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--end card-body-->
+            <!--end card-body-->
+        </div>
+    </div>
+
+
+<div class="custombox-open" style="display: none;"></div>
+</div>
+
+<script>
+    function setreferacceptmodal(r_id_refer_accept) {
+        document.getElementById("r_id_refer_accept").value = r_id_refer_accept;
+        document.getElementById("rrt_id_refer_accept").value = r_id_refer_accept;
+        document.getElementById("r_id_refer_reject").value = r_id_refer_accept;
+        document.getElementById("r_id_refer_discharge").value = r_id_refer_accept;
+
+    }
+</script>
+
+<%- include("footer"); -%>

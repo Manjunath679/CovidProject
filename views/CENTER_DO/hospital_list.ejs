@@ -1,0 +1,94 @@
+<%- include("header",{element: element}); -%>
+
+<!-- Page-Title -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-right align-item-center mt-2">
+                <!-- <a href="#custom-modal" class="btn btn-info px-4 align-self-center report-btn" data-animation="blur" data-plugin="custommodal" data-overlaycolor="#38414a">Add Center</a> -->
+            </div>
+            <h4 class="page-title mb-2"><i class="mdi mdi-monitor mr-2"></i>Hospitals List</h4>  
+            <div class="">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">District Covid Management</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>                                      
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+<%- include("header2"); -%>
+            <!-- Page Content-->
+            <div class="page-content" style="overflow: scroll;">
+                    <div class="container" style="overflow: scroll;">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="mt-0 header-title">Center List</h4>
+                                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive " style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                        <thead>
+                                        <tr>
+                                            <th>Center Id</th>
+                                            <th>Facility Name</th>
+                                            <th>Category</th>
+                                            <th>General Bed</th>
+                                            <th>Oxygen Bed</th>
+                                            <th>ICU Bed</th>
+                                            <th>Ventilator_</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th>Village</th>
+                                            <th>Block</th>
+                                            
+                                        </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                    
+                                                <th></th>
+                                                <th></th>
+                                                <th> </th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                    
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <% centers_list.forEach(element => {  %>
+                                                <tr>
+                                                    <td><%= element.center_id%></td>
+                                                    <td><%= element.facility_name%></td> 
+                                                    <td><%= element.category%></td>
+                                                    <td>0/<%= element.no_general_bed%></td>
+                                                    <td>0/<%= element.no_oxygen_bed%></td>
+                                                    <td>0/<%= element.no_icu_bed%></td>
+                                                    <td>0/<%= element.no_ventilator%></td> 
+                                                    <td><%= element.email%></td> 
+                                                    <td><%= element.telephone%></td> 
+                                                    <td><%= element.village%></td> 
+                                                    <td><%= element.block%></td>
+                                                   
+                                                </tr>
+                                                
+                                            <% }) %>
+                                        </tbody>
+                                    </table>        
+                                </div>
+                            </div>
+                        </div> <!-- end col -->
+                    </div> <!-- end row -->
+
+                </div><!-- container -->
+
+               
+            </div>
+<%- include("footer"); -%>

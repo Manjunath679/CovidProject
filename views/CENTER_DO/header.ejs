@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>District Covid Management</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Dashboard for District Covid Hospital Management" name="description" />
+        <meta content="Teceads" name="author" />
+        <!-- App favicon -->
+        <!-- <link rel="shortcut icon" href="assets/images/favicon.ico"> -->
+        <link href="assets/plugins/jvectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet">
+
+        <link href="assets/plugins/dropify/css/dropify.min.css" rel="stylesheet">
+        <link href="assets/plugins/custombox/custombox.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css">
+        <!-- App css -->
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/metismenu.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+    <!-- Dropzone css -->
+    <link href="assets/plugins/dropzone/dist/dropzone.css" rel="stylesheet" type="text/css">
+    <style>
+        .tooltip_ {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip_ .tooltip_text {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  
+  /* Position the tooltip_ */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip_:hover .tooltip_text {
+  visibility: visible;
+}
+    </style>
+    </head>
+
+    <body>
+
+        <!-- Top Bar Start -->
+        <div class="topbar">
+             <nav class="navbar-custom">
+
+                <div class="topbar-left">
+                    <a href="https://swosth.in" 
+target="_blank" class="logo">
+                        
+                        <span>
+<h3></h3>                        </span>
+                        <span>
+                            <img src="assets/images/logo-sm.png" height="40" alt="logo" class="my-3">
+                        </span>
+                        
+                    </a>
+                </div>
+    
+                <ul class="list-unstyled topbar-nav float-right mb-0">
+
+                    
+                    <li>
+                        <div class="media " style="margin-top: 5px;">
+                                            <div class=" tooltip_ avatar-box thumb-lg align-self-center mr-2" style="cursor: pointer;" onclick="location.href='/in-referralsmanagement';">
+                                                <span class="avatar-title bg-success rounded-circle" id="referral_noti" >_</span>
+                                                <span class="tooltip_text">Pending Referrals</span>
+
+                                            </div>
+                                            <!-- <div class="tooltip_ avatar-box thumb-lg align-self-center mr-2">
+                                                <span class="avatar-title bg-pink rounded-circle" id="discharge_noti">MT</span>
+                                                <span class="tooltip_text">Incomming Discharged</span>
+
+                                            </div> -->
+                                            <div class="tooltip_ avatar-box thumb-lg align-self-center mr-2" style="cursor: pointer;" onclick="location.href='/patientmanagement';">
+                                                <span class="avatar-title bg-purple rounded-circle" id="health_noti">_</span>
+                                                <span class="tooltip_text">Pending Health Records</span>
+
+                                            </div>
+
+                                            </div>
+                        
+                    </li>
+                    <li>
+                        <div class="alert alert-outline-purple b-round" role="alert" style="margin-top: 10px;" >
+                            <strong><%= element.workplace_details %></strong>  
+                        </div>
+                       
+                    </li>
+                    <li class="dropdown">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="false" aria-expanded="false">
+                            <img src="assets/images/users/user-2.png" alt="profile-user" class="rounded-circle" /> 
+                            <span class="ml-1 nav-user-name hidden-sm"> <i class="mdi mdi-chevron-down"></i> </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                           
+                            <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/logout"><i class="dripicons-exit text-muted mr-2"></i> Logout</a>
+                        </div>
+                    </li>
+                </ul>
+    
+                <ul class="list-unstyled topbar-nav mb-0">
+                        
+                    <li>
+                        <button class="button-menu-mobile nav-link waves-effect waves-light">
+                            <i class="mdi mdi-menu nav-icon"></i>
+                        </button>
+                    </li>
+
+                    
+                    
+                    
+                </ul>
+
+            </nav>
+        </div>
+        <!-- Top Bar End -->
+        <div class="page-wrapper-img">
+            <div class="page-wrapper-img-inner">
+                <div class="sidebar-user media">                    
+                    <img src="assets/images/users/user-2.png" alt="user" class="rounded-circle img-thumbnail mb-1">
+                    <span class="online-icon"><i class="mdi mdi-record text-success"></i></span>
+                    <div class="media-body">
+                        <h5 class="text-light">Center DEO</h5>
+                        <span class="text-light"><%= element.workplace%></span>
+                        <ul class="list-unstyled list-inline mb-0 mt-2">
+                            <!-- <li class="list-inline-item">
+                                <a href="#" class="">Mr. Kaushik Subudhi</i></a>
+                            </li> -->
+                            <!-- <li class="list-inline-item">
+                                <a href="#" class=""><i class="mdi mdi-account text-light"></i></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#" class=""><i class="mdi mdi-settings text-light"></i></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#" class=""><i class="mdi mdi-power text-danger"></i></a>
+                            </li> -->
+                        </ul>
+                    </div>                    
+                </div>
+                
+  

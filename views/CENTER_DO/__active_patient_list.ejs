@@ -1,0 +1,187 @@
+<%- include("header",{element: element}); -%>
+
+<!-- Page-Title -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-right align-item-center mt-2">
+                <button type="button" class="btn btn-info px-4 align-self-center report-btn" data-toggle="modal"
+                    data-target=".bd-example-modal-xl">Add Patient</button>
+
+            </div>
+            <h4 class="page-title mb-2"><i class="mdi mdi-monitor mr-2"></i>Active Patient List</h4>
+            <div class="">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">District Covid Management</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+<%- include("header2"); -%>
+<!-- Page Content-->
+<div class="page-content" style="overflow: scroll;">
+        <div class="container" style="overflow: scroll;">
+
+
+        
+
+        <div class="row">
+       
+        
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mt-0 header-title">Active Patient List</h4>
+                        <table id="do_patient_list" class="table table-striped table-bordered dt-responsive "
+                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Patient Details</th>
+                                    <th>Bed Details</th>
+                                    <th>Health</th>
+                                    <th>Health</th>
+                                    <th>Last Update</th>
+                                    <th>Family Contact No</th>
+                                    <th>Previous Covid Date</th>
+                                    <th>Covid Status</th>
+                                    <th>Vaccination Details</th>
+                                    <th>Contact</th>
+                                    <th>Family</th>
+                                    <th>Swap Collection Date</th>
+                                    <th>Symptoms</th>
+                                    <th>Covid Report</th>
+                                    <th>Address</th>
+                                    <th>Village</th>
+                                    <th>Block</th>
+                                    <th>Admission Date</th>
+                                    <th>Co Morbiditie</th>
+                                    <th>Travel History</th>
+                                    <th>Positive Declare Date</th>
+                                    <th>Patient Record</th>
+                                </tr>
+                            </thead>
+                           
+                            <tbody>
+                                <% patients_list.forEach(element => { if(element.discharge_status==="ACTIVE") { %>
+                                <tr>
+                                    <td>ID: <%= element.patient_id%> <br> 
+                                        Name: <%= element.patient_name%><br> 
+                                        Age: <%= element.age%>, 
+                                        Sex: <%= element.sex[0]%><br>  
+                                        IPD:
+                                    </td>
+                                    
+                                    <td>
+                                        Bed No: <%= element.active_bed_details.bed_no%> <br>
+                                        Category: <%= element.active_bed_details.bed_category%> <br>
+                                        Section: <%= element.active_bed_details.section_details%> <br>
+                                       
+                                        <a href="/patientdetails/<%= element.patient_id%>">See More</a> <br>
+                                    </td>
+                                    <td>
+                                        SpO2: <%= element.active_health_status.spo2%> <br>
+                                        Pulse: <%= element.active_health_status.pulse%> <br>
+                                        Temperature: <%= element.active_health_status.temperature%> <br>
+                                    </td>
+                                    <td>
+                                        Bp: <%= element.active_health_status.bp%> <br>
+                                        FBS: <%= element.active_health_status.fbs%> <br>
+                                        RBD: <%= element.active_health_status.rbs%> <br>
+                                        Condition: <%= element.active_health_status.condition%> <br>
+                                        <a href="/patientdetails/<%= element.patient_id%>">See More</a> <br>
+                                    </td>
+                                    <td><%= element.active_health_status.date%><br>(<%= element.active_health_status.time%>)</td>
+                                    <td><%= element.alt_telephone%></td>
+                                    <td><%= element.previous_covid%> <br> <%= element.previous_covid_date%></td>
+                                    <td><%= element.covid_status%></td>
+                                    <td><%= element.vaccination%> <br> <%= element.vaccination_date%></td>
+                                    <td><%= element.telephone%><br></td>
+                                    <td><%= element.s_d_w_of%></td>
+                                    <td><%= element.swap_collection_date%></td>
+
+                                    <td><%= element.symptoms%> <br> <%= element.date_symptoms%></td>
+                                    <td><%= element.covid_report%></td>
+                                    
+                                    <td><%= element.address%></td>
+                                    <td><%= element.village%></td>
+                                    <td> <%= element.block%></td>
+                                    
+                                    <td><%= element.admission_date%></td>
+                                    <td><%= element.co_morbidities%></td>
+                                    <td><%= element.travel_history%></td>
+                                    <td><%= element.positive_declare_date%></td>
+                                    <td><a href="/patientdetails/<%= element.patient_id%>">Click Here</a></td>
+
+                                </tr>
+                                
+                                <% }}) %>
+                            </tbody>
+                        </table>
+                    <!-- </div> -->
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+
+
+
+
+
+
+    <script>
+        function setdischargemodal(p_id,p_name) {
+            document.getElementById("p_id").value = p_id;
+            document.getElementById("p_name").value = p_name;
+            
+        }
+
+        function setheathtrecordmodal(p_id,p_name) {
+            document.getElementById("p_id_hr").value = p_id;
+            document.getElementById("p_name_hr").value = p_name;
+            
+        }
+        function setreadmitmodal(r_id,p_id,p_name) {
+            document.getElementById("referral_id_rd").value = r_id;
+            document.getElementById("patient_id_rd").value = p_id;
+            document.getElementById("patient_name_rd").value = p_name;
+            
+        }
+        function setnsmodal(r_id,p_id,p_name) {
+            document.getElementById("referral_id_ns").value = r_id;
+            document.getElementById("patient_id_ns").value = p_id;
+            document.getElementById("patient_name_ns").value = p_name;
+            
+        }
+        
+        function setshiftmodal(p_id,p_name,p_section) {
+            document.getElementById("p_id_sft").value = p_id;
+            document.getElementById("p_name_sft").value = p_name;
+            document.getElementById("from_section_id").value = p_section;
+            document.getElementById("exsiting_section_id").value = p_section;
+            document.getElementById("exsiting_section_id").innerHTML = p_section;
+            
+        }
+
+        function setrefermodal(p_id,p_name,p_center) {
+            document.getElementById("p_id_refer").value = p_id;
+            document.getElementById("p_name_refer").value = p_name;
+            document.getElementById("from_center_id").value = p_center;
+            
+        }
+    </script>
+
+
+
+</div>
+<!--end col-->
+
+
+
+
+</div><!-- container -->
+
+
+</div>
+<%- include("footer"); -%>

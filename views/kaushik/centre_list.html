@@ -1,0 +1,105 @@
+<%- include("header",{element: element}); -%>
+
+
+<!-- Page-Title -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-right align-item-center mt-2">
+                <button class="btn btn-info px-4 align-self-center report-btn">Creat Report</button>
+            </div>
+            <h4 class="page-title mb-2"><i class="mdi mdi-monitor mr-2"></i>Center List</h4>  
+            <div class="">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">District Covid Management</a></li>
+                    <li class="breadcrumb-item active">Center List</li>
+                </ol>
+            </div>                                      
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+<%- include("header2"); -%>
+
+                <!-- Page Content-->
+                <div class="page-content" style="overflow: scroll;">
+                    <div class="container-fluid"> 
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+        
+                                        <h4 class="mt-0 header-title">Centre List</h4>
+        
+                                        <table id="datatable" class="table table-bordered dt-responsive " style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                            <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Category</th>
+                                                <th>Telephone</th>
+                                                <th>Block</th>
+                                                <th>Total Beds</th>
+                                                <th>Beds Alloted</th>
+                                                <th>Beds Available</th>
+                                            </tr>
+                                            </thead>
+        
+        
+                                            <tbody>
+                                                <tr>
+                                                    <td>Centre 1</td>
+                                                    <td>DCCC</td>
+                                                    <td>9040888404</td>
+                                                    <td>Berhampur</td>
+                                                    <td>762</td>
+                                                    <td>342</td>
+                                                    <td>420</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+        
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+                    </div><!-- container -->
+
+                    <footer class="footer text-center text-sm-left">
+                        &copy; 2021 District Covid Management <span class="text-muted d-none d-sm-inline-block float-right">Developed by <a href="www.teceads.com">Teceads</a></span>
+                    </footer>
+                </div>
+                <!-- end page content -->
+            </div>
+            <!--end page-wrapper-inner -->
+        </div>
+        <!-- end page-wrapper -->
+
+        <!-- jQuery  -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/metisMenu.min.js"></script>
+        <script src="assets/js/waves.min.js"></script>
+        <script src="assets/js/jquery.slimscroll.min.js"></script>
+
+        <!-- Required datatable js -->
+        <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+        <!-- Buttons examples -->
+        <script src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
+        <script src="assets/plugins/datatables/buttons.bootstrap4.min.js"></script>
+        <script src="assets/plugins/datatables/jszip.min.js"></script>
+        <script src="assets/plugins/datatables/pdfmake.min.js"></script>
+        <script src="assets/plugins/datatables/vfs_fonts.js"></script>
+        <script src="assets/plugins/datatables/buttons.html5.min.js"></script>
+        <script src="assets/plugins/datatables/buttons.print.min.js"></script>
+        <script src="assets/plugins/datatables/buttons.colVis.min.js"></script>
+        <!-- Responsive examples -->
+        <script src="assets/plugins/datatables/dataTables.responsive.min.js"></script>
+        <script src="assets/plugins/datatables/responsive.bootstrap4.min.js"></script>
+        <script src="assets/pages/jquery.datatable.init.js"></script>
+
+        <!-- App js -->
+        <script src="assets/js/app.js"></script>
+
+    </body>
+</html>

@@ -1,0 +1,213 @@
+<%- include("header",{element: element}); -%>
+
+
+<!-- Page-Title -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-right align-item-center mt-2">
+                <a href="#custom-modal" class="btn btn-info px-4 align-self-center report-btn" data-animation="blur"
+                    data-plugin="custommodal" data-overlaycolor="#38414a">Add User</a>
+            </div>
+            <h4 class="page-title mb-2"><i class="mdi mdi-account-key-outline mr-2"></i>User Management</h4>
+            <div class="">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active">District Covid Management</li>
+
+                    <li class="breadcrumb-item active">User Management</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+</style>
+<!-- end page title end breadcrumb -->
+<%- include("header2"); -%>
+<!-- Page Content-->
+<div class="page-content" style="overflow: scroll;">
+        <div class="container" style="overflow: scroll;">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mt-0 header-title">COVID CELL DEPARTMENT</h4>
+                        <div class="table-responsive">
+                            <table id="co_covid_cell_user" class="table table-striped table-bordered dt-responsive "
+                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>User Id</th>
+                                        <th>Name</th>
+                                        <th>Work Place</th>
+                                        <th>Ph No</th>
+                                        <th>Department</th>
+                                        <th>Designation</th>
+                                        <th>User Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% users_list.forEach(element => { if(element.department=="COVID_CELL"){ %>
+                                    <tr>
+                                        <td><%= element.UserID%></td>
+                                        <td><%= element.name%></td>
+                                        <td><%= element.workplace%></td>
+                                        <td><%= element.phonenumber%></td>
+                                        <td><%= element.department%></td>
+                                        <td><%= element.designation%></td>
+                                        <td><%= element.username%></td>
+                                    </tr>
+                                    <% }}) %>
+
+                                    <!-- <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>Jacob</td>
+                                                    <td>XYZ@Example.com</td>
+                                                    <td><span class="badge badge-boxed  badge-warning">Personal</span>
+                                                    </td>
+                                                </tr> -->
+
+                                </tbody>
+                            </table>
+                            <!--end /table-->
+                        </div>
+                        <!--end /tableresponsive-->
+                    </div>
+                    <!--end card-body-->
+                </div>
+                <!--end card-->
+            </div> <!-- end col -->
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h4 class="mt-0 header-title">User List</h4>
+
+
+                        <table id="co_user_list" class="table table-striped table-bordered dt-responsive "
+                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                <tr>
+                                    
+                                    <th>Work Place Detail</th>
+                                    <th>User Id <br><strong>Name</strong></th>
+                                    <th>Ph No</th>
+                                    <th>Department</th>
+                                    <th>Designation</th>
+                                    <th>User Name</th>
+                                    <th>Password</th>
+                                    <th>Reference Id</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% users_list.forEach(element => { if(element.department != 'COVID_CELL' && element.department != "TECEADS" ){ %>
+                                <tr>
+                                    
+                                    <td><%= element.workplace%> <br>
+                                        <strong><%= element.workplace_details%></strong> </td>
+                                    <td><%= element.UserID%> <br> 
+                                        <strong><%= element.name%></strong> </td>
+
+                                    <td><%= element.phonenumber%></td>
+                                    <td><%= element.department%></td>
+                                    <td><%= element.designation%></td>
+                                    <td><%= element.username%></td>
+                                    <td><%= element.save_pass%></td>
+                                    <td><%= element.workplace.substring(4)%> </td>
+                                </tr>
+                                <% }}) %>
+
+                                <!-- <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>Jacob</td>
+                                                    <td>XYZ@Example.com</td>
+                                                    <td><span class="badge badge-boxed  badge-warning">Personal</span>
+                                                    </td>
+                                                </tr> -->
+
+                            </tbody>
+                        </table>
+                        <!--end /table-->
+                    </div>
+                    <!--end /tableresponsive-->
+                </div>
+                <!--end card-body-->
+            </div>
+            <!--end card-->
+        </div> 
+    </div> <!-- end row -->
+    <div id="custom-modal" class="modal-demo">
+        <button type="button" class="close" onclick="Custombox.modal.close();"><span>×</span><span
+                class="sr-only">Close</span></button>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="mt-0 header-title">Add User</h4>
+                <p class="text-muted mb-4"></p>
+                <form action="/signup" method="post">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Login Email</label>
+                        <input type="email" class="form-control" readonly value="Will Be Generated Automatically"
+                            placeholder="Will Be Generated Automatically" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="text" class="form-control" readonly value="Will Be Generated Automatically"
+                            placeholder="Will Be Generated Automatically" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name</label>
+                        <input type="text" class="form-control" name="name" placeholder="Enter Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Department</label>
+                        <select class="form-control" name="department" required>
+                            <option value="">Select</option>
+                            <option value="CENTER_DO">CENTER_DO</option>
+                            <!-- <option value="RRT">RRT</option> -->
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Work Place / Center Id</label>
+                        <p>(Add Center To Allot Data Operator, Center added can found in below list)</p>
+                        <select list="centers_list" type="text" class="form-control" name="workplace"
+                            placeholder="Enter Work Place" required>
+                            <datalist id="centers_list">
+                                <option value="">Select</option>
+                                <option value="RRT">RRT</option>
+                                <% centers_list.forEach(element => { %>
+                                <option value="<%= element.center_id %>">
+                                    <br><%= element.center_id%>
+                                    <br><%= element.facility_name%>
+                                    <br><%= element.category%>
+                                    <br><%= element.village%>
+                                    <br><%= element.block%></option>
+
+                                <% }) %>
+                            </datalist>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Designation</label>
+                        <input type="text" class="form-control" name="designation" placeholder="Enter Designation">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Phone Number</label>
+                        <input type="number" class="form-control" name="phonenumber" placeholder="Enter Phone Number">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <!--end card-body-->
+        </div>
+    </div>
+</div>
+   
+
+
+
+<%- include("footer"); -%>

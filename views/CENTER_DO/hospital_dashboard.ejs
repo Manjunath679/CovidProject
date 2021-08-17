@@ -1,0 +1,534 @@
+<%- include("header",{element: element}); -%>
+
+<!-- Page-Title -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-right align-item-center mt-2">
+                <!-- <button type="button" class="btn btn-info px-4 align-self-center report-btn" data-toggle="modal"
+                    data-target=".bd-example-modal-xl">Add Patient</button> -->
+
+            </div>
+            <h4 class="page-title mb-2"><i class="mdi mdi-monitor mr-2"></i>Hospital Dashboard</h4>
+            <div class="">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">District Covid Management</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+<%- include("header2"); -%>
+<!-- Page Content-->
+                <div class="page-content" style="overflow: scroll;">
+                    <div class="container-fluid"> 
+                        <div class="row">
+                            <!-- <div class="col-lg-4" style="cursor: pointer;" >
+                                <div class="card carousel-bg-img">
+                                    <div class="card-body dash-info-carousel mb-0">
+                                        <div id="carouselExampleControls1" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item active">
+                                                    <div class="row">                                            
+                                                        <div class="col-12 align-self-center">
+                                                            <div class="">
+                                                                
+                                                                <h4 class="mt-0 header-title text-left">Active Cases</h4>
+                                                                <h2 class="mt-0 font-weight-bold text-dark"><%= header_data.active_patient %> </h2> 
+                                                                <p class="mb-1 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i><%= ((header_data.active_patient/header_data.total_patient)*100).toFixed(2) %> %</span> Active to total percentage</p>
+                                                            </div>
+                                                        </div>                                                   
+                                                    </div>                                                 
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <div class="row">                                            
+                                                        <div class="col-12 align-self-center">
+                                                            <div class="text-center">
+                                                                <h4 class="mt-0 header-title text-left">Discharged</h4>
+                                                                <h2 class="mt-0 font-weight-bold text-dark"><%= header_data.discharged_patient %> </h2> 
+                                                                <p class="mb-1 text-muted"><span class="text-info"><%= ((header_data.discharged_patient/header_data.total_patient)*100).toFixed(2)%> %</span> Discharge rate</p>
+                                                            </div>
+                                                        </div>                                                      
+                                                    </div>                                                  
+                                                </div>
+
+                                                <div class="carousel-item">
+                                                    <div class="row">                                            
+                                                        <div class="col-12 align-self-center">
+                                                            <div class="text-center">
+                                                                <h4 class="mt-0 header-title text-left">LAMA</h4>
+                                                                <h2 class="mt-0 font-weight-bold text-dark"><%= header_data.lwma %> </h2> 
+                                                                <p class="mb-1 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i><%= ((header_data.lwma/header_data.total_patient)*100).toFixed(2)%> %</span> Death percentage</p>
+                                                            </div>
+                                                        </div>                                                        
+                                                    </div>                                                    
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <div class="row">                                            
+                                                        <div class="col-12 align-self-center">
+                                                            <div class="text-center">
+                                                                <h4 class="mt-0 header-title text-left">Deaths</h4>
+                                                                <h2 class="mt-0 font-weight-bold text-dark"><%= header_data.death %> </h2> 
+                                                                <p class="mb-1 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i><%= ((header_data.death/header_data.total_patient)*100).toFixed(2)%> %</span> Death percentage</p>
+                                                            </div>
+                                                        </div>                                                        
+                                                    </div>                                                   
+                                                </div>
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselExampleControls1" role="button" data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselExampleControls1" role="button" data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </div>
+                                    </div>                                                                                                      
+                                </div>
+                            </div> -->
+                            <!-- var total_hospital_data={
+                                total_bed_available:0,
+                                total_bed_occupied:0,
+                                total_oxygen_bed_available:0,
+                                total_oxygen_bed_occupied:0,
+                                total_icu_bed_available:0,
+                                total_icu_bed_occupied:0,
+                                total_general_bed_available:0,
+                                total_general_bed_occupied:0,
+                                total_ventilator_bed_available:0,
+                                total_ventilator_bed_occupied:0,
+                            } -->
+                            <div class="col-lg-4" style="cursor: pointer;">
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title"  style="font-size: 90%;">Total Bed Occupancy</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark"><%= total_hospital_data.total_bed_occupied %>/<%= total_hospital_data.total_bed_available %></h2> 
+                                                    <p class="mb-0 text-muted"><span class="text-info"><%= ((total_hospital_data.total_bed_occupied/total_hospital_data.total_bed_available)*100).toFixed(2)%> %</span>  Bed Occupied</p>
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-time-reverse bg-soft-warning"></i>
+                                                </div>
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            <div class="col-lg-4" style="cursor: pointer;" >
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title"  style="font-size: 90%;">General Bed Occupancy</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark"><%= total_hospital_data.total_general_bed_occupied %>/<%= total_hospital_data.total_general_bed_available %></h2> 
+                                                    <p class="mb-0 text-muted"><span class="text-info"><%= ((total_hospital_data.total_general_bed_occupied/total_hospital_data.total_general_bed_available)*100).toFixed(2)%> %</span>  Bed Occupied</p>
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-time-reverse bg-soft-warning"></i>
+                                                </div>
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            
+                            <!-- <div class="col-lg-4" style="cursor: pointer;" >
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title">Isolation Bed Occupancy</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark"><%= total_hospital_data.total_isolation_bed_occupied %>/<%= total_hospital_data.total_isolation_bed_available %></h2> 
+                                                    <p class="mb-0 text-muted"><span class="text-info"><%= ((total_hospital_data.total_isolation_bed_occupied/total_hospital_data.total_isolation_bed_available)*100).toFixed(2)%> %</span>  Bed Occupied</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-time-reverse bg-soft-warning"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                                                  
+                                </div>
+                            </div> -->
+
+                            
+                            <div class="col-lg-4" style="cursor: pointer;" >
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title"  style="font-size: 90%;">HDU Bed Occupancy</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark"><%= total_hospital_data.total_hdu_bed_occupied %>/<%= total_hospital_data.total_hdu_bed_available %></h2> 
+                                                    <p class="mb-0 text-muted"><span class="text-info"><%= ((total_hospital_data.total_hdu_bed_occupied/total_hospital_data.total_hdu_bed_available)*100).toFixed(2)%> %</span>  Bed Occupied</p>
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-time-reverse bg-soft-warning"></i>
+                                                </div>
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                          
+                            <div class="col-lg-4" style="cursor: pointer;" >
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title"  style="font-size: 90%;">O2 Bed Occupancy</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark"><%= total_hospital_data.total_oxygen_bed_occupied %>/<%= total_hospital_data.total_oxygen_bed_available %></h2> 
+                                                    <p class="mb-0 text-muted"><span class="text-info"><%= ((total_hospital_data.total_oxygen_bed_occupied/total_hospital_data.total_oxygen_bed_available)*100).toFixed(2)%> %</span>  Bed Occupied</p>
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-time-reverse bg-soft-warning"></i>
+                                                </div>
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            <div class="col-lg-4" style="cursor: pointer;" >
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title" style="font-size: 90%;">Total ICU Bed Occupancy</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark"><%= (total_hospital_data.total_icu_bed_occupied+total_hospital_data.total_ventilator_bed_occupied) %>/<%= total_hospital_data.total_icu_bed_available + total_hospital_data.total_ventilator_bed_available  %></h2> 
+                                                    <p class="mb-0 text-muted"><span class="text-info"><%= ((total_hospital_data.total_icu_bed_occupied/total_hospital_data.total_ventilator_bed_occupied)*100).toFixed(2)%> %</span>  Bed Occupied</p>
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-time-reverse bg-soft-warning"></i>
+                                                </div>
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            <div class="col-lg-4" style="cursor: pointer;" >
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title"  style="font-size: 90%;">Ventilator Devices</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark"><%= total_hospital_data.total_ventilator_bed_occupied %>/<%= total_hospital_data.total_ventilator_bed_available %></h2> 
+                                                    <p class="mb-0 text-muted"><span class="text-info"><%= ((total_hospital_data.total_ventilator_bed_occupied/total_hospital_data.total_ventilator_bed_available)*100).toFixed(2)%> %</span>  Bed Occupied</p>
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-time-reverse bg-soft-warning"></i>
+                                                </div>
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            <!-- <div class="col-lg-4" style="cursor: pointer;" >
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title">Oxygen Inventory</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark">NaN</h2> 
+                                                    <p class="mb-0 text-muted"><span class="text-info"> NaN</span>  </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-time-reverse bg-soft-warning"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                                                    
+                                </div>
+                            </div> -->
+                            <!--end col-->
+                                            
+                        </div><!--end row-->
+                        
+                        <!-- <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title mt-0">Overview</h4>                                         
+                                        <div class="chart-demo dash-apex-chart">
+                                            <div id="d2_overview" class="apex-charts"></div>
+                                        </div>                                      
+                                    </div>
+                                </div>
+                            </div>                               
+                        </div> -->
+
+                        
+
+
+                    </div><!-- container -->
+                        <div class="container" style="overflow: scroll;">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="mt-0 header-title">Occupancy List</h4>
+                                        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive " style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                            <thead>
+                                            <tr>
+                                                <th>Section Id</th>
+                                                <th>Room Name</th>
+                                               
+                                                <th>Overall Bed</th> 
+                                                <th>General Bed</th>
+                                                <th>Oxygen Bed</th>
+                                                <th>HDU_Bed</th>
+                                                <th>Total ICU_Bed</th>
+                                                <th>Ventilator Device</th>
+                                               
+                                                <th>Incharge Name</th>
+                                                <th>Incharge Phone</th>
+                                                <th>Section Floor</th>
+                                                <th>Section Category</th>
+                                                <th>Facility Details</th>
+                                                <th>Patient List</th>
+                                            </tr>
+                                            </thead>
+                                            
+                                            <tbody>
+    
+                                                <% section_list.forEach(element => {  %>
+                                                    
+                                                    <tr>
+                                                        <td><%= element.section.section_id%></td>
+                                                        <td><%= element.section.room_name%></td>
+                                                        <td><%= element.total_bed_occupied%> / <%= element.total_bed_available%></td>
+                                                        <td><%= element.total_general_bed_occupied%> / <%= element.section.no_of_general_beds%></td>
+                                                        <td><%= element.total_oxygen_bed_occupied%> / <%= element.section.no_of_oxygen_beds%></td>
+                                                        <td><%= element.total_hdu_bed_occupied%> / <%= element.section.no_hdu_beds%></td> 
+                                                        <td><%=element.total_ventilator_bed_occupied+ element.total_icu_bed_occupied%> / <%= element.section.no_of_icu_beds+element.section.no_of_ventilator_beds%></td>
+                                                        <td><%= element.total_ventilator_bed_occupied%> / <%= element.section.no_of_ventilator_beds%></td> 
+                                                        <td><%= element.section.incharge_name%></td>
+                                                        <td><%= element.section.telephone%></td>
+                                                        <td><%= element.section.floor%></td>
+                                                        <td><%= element.section.category%></td>
+                                                        <td><%= element.hospital.center_id%> / <%= element.hospital.facility_name%> / <%= element.hospital.category%></td>
+                                                        <td><a href="/s_patient_list/<%= element.section.section_id%>">Click Here</a></td>
+    
+                                                        
+                                                       
+                                                    </tr>
+                                                    
+                                                <% }) %>
+                                            </tbody>
+                                        </table>        
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+                        <%- include("referral_noti"); -%>
+
+                    </div><!-- container -->
+                    
+                    
+                </div>
+                <footer class="footer text-center text-sm-left">
+                    &copy; 2021 District Covid Management <span class="text-muted d-none d-sm-inline-block float-right">Developed by <a href="www.teceads.com">Teceads</a></span>
+                  </footer>
+                        <!-- end page content -->
+                      </div>
+                      <!--end page-wrapper-inner -->
+                  </div>
+                  <!-- end page-wrapper -->
+                   <!-- jQuery  -->
+                   <script src="assets/js/jquery.min.js"></script>
+                   <script src="assets/js/bootstrap.bundle.min.js"></script>
+                   <script src="assets/js/metisMenu.min.js"></script>
+                   <script src="assets/js/waves.min.js"></script>
+                   <script src="assets/js/jquery.slimscroll.min.js"></script>
+                  
+                   <script src="assets/plugins/custombox/custombox.min.js"></script>
+                   <script src="assets/plugins/custombox/custombox.legacy.min.js"></script>
+                   <script src="assets/pages/jquery.modal-animation.js"></script>
+                   <script src="assets/plugins/dropzone/dist/dropzone.js" ></script>
+                  
+                   <script src="assets/plugins/dropify/js/dropify.min.js"></script>
+                   <script src="assets/pages/jquery.form-upload.init.js"></script>
+                    <!-- Required datatable js -->
+                    <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+                    <script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+                    <!-- Buttons examples -->
+                    <script src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
+                    <script src="assets/plugins/datatables/buttons.bootstrap4.min.js"></script>
+                    <script src="assets/plugins/datatables/jszip.min.js"></script>
+                    <script src="assets/plugins/datatables/pdfmake.min.js"></script>
+                    <script src="assets/plugins/datatables/vfs_fonts.js"></script>
+                    <script src="assets/plugins/datatables/buttons.html5.min.js"></script>
+                    <script src="assets/plugins/datatables/buttons.print.min.js"></script>
+                    <script src="assets/plugins/datatables/buttons.colVis.min.js"></script>
+                    <!-- Responsive examples -->
+                    <script src="assets/plugins/datatables/dataTables.responsive.min.js"></script>
+                    <script src="assets/plugins/datatables/responsive.bootstrap4.min.js"></script>
+                    <script src="assets/pages/jquery.datatable.init.js"></script>
+                  
+                  
+                  
+                  
+                    <script src="assets/plugins/moment/moment.js"></script>
+                  
+                    <script src="assets/plugins/apexcharts/apexcharts.min.js"></script>
+                    <script src="https://apexcharts.com/samples/assets/irregular-data-series.js"></script>
+                    <script src="https://apexcharts.com/samples/assets/series1000.js"></script>
+                    <script src="https://apexcharts.com/samples/assets/ohlc.js"></script>
+                  
+                    <script src="assets/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
+                    <script src="assets/plugins/jvectormap/jquery-jvectormap-us-aea-en.js"></script>
+                    <!-- Required datatable js -->
+                   
+                  
+                    <script src="assets/pages/jquery.dashboard-2.init.js"></script>
+                  
+                  <script>
+                  
+                   
+                  
+                  // d2_overview
+                  
+                     var options = {
+                      chart: {
+                          height: 350,
+                          type: 'area',
+                      },
+                      dataLabels: {
+                          enabled: false
+                      },
+                      colors:['#00bcd4', '#7043c1'],
+                      stroke: {
+                          curve: 'smooth'
+                      },
+                      markers: {
+                        size: 3,
+                        opacity: 0.9,
+                        colors: ["#f93b7a"],
+                        strokeColor: "#fff",
+                        strokeWidth: 2,
+                        style: 'inverted', // full, hollow, inverted
+                        hover: {
+                          size: 5,
+                        }
+                      },
+                      series: [{
+                          name: 'series1',
+                          data: [3, 30, 10, 10, 22, 12, 5, 15, 5, 25, 5, 7]
+                      }, {
+                          name: 'series2',
+                          data: [5, 15, 12, 25, 5, 7, 30, 10, 18, 5, 12, 5,]
+                      }],
+                  
+                      xaxis: {
+                          type: 'month',
+                          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',],                
+                      },
+                      tooltip: {
+                          x: {
+                              format: 'dd/MM/yy HH:mm'
+                          },
+                      }
+                  }
+                  
+                  var chart = new ApexCharts(
+                      document.querySelector("#d2_overview"),
+                      options
+                  );
+                  
+                  chart.render();
+                  
+                  </script>  
+                    <!-- App js -->
+                    <script src="assets/js/app.js"></script>
+                  
+                  
+                  
+                  </body>
+                  
+                  </html>

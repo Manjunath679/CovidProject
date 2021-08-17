@@ -1,0 +1,182 @@
+<%- include("header",{element: element}); -%>
+
+<!-- Page-Title -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-right align-item-center mt-2">
+                <a href="#custom-modal" class="btn btn-info px-4 align-self-center report-btn" data-animation="blur" data-plugin="custommodal" data-overlaycolor="#38414a">Add Section/Room</a>
+            </div>
+            <h4 class="page-title mb-2"><i class="mdi mdi-monitor mr-2"></i>Dashboard</h4>  
+            <div class="">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">District Covid Management</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>                                      
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+<%- include("header2"); -%>
+            <!-- Page Content-->
+            <div class="page-content" style="overflow: scroll;">
+                    <div class="container" style="overflow: scroll;">
+
+
+                  
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+    
+                                    <h4 class="mt-0 header-title">Section/Room List</h4>
+                                    
+    
+                                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive " style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                        <thead>
+                                        <tr>
+                                            <th>Section Id</th>
+                                            <th>Center Id</th>
+                                            <th>Category</th>
+
+                                            <th>Floor</th>
+                                            <th>Room Name</th>
+                                            <th>No. of Bed</th>
+                                            <th>No. Ventilators</th>
+                                            <th>Incharge Name</th>
+                                            <th>Phone</th>
+                                            
+                                        </tr>
+                                        </thead>
+                                         
+                                        <tbody>
+                                            <% section_list.forEach(element => {  %>
+                                                <tr>
+                                                    <td><%= element.section_id%></td>
+                                                    <td><%= element.center_id%></td>
+                                                    <td><%= element.category%></td> 
+                                                    <td><%= element.floor%></td>
+                                                    <td><%= element.room_name%></td>
+                                                    <td><%= element.no_of_beds%></td>
+                                                    <td><%= element.no_of_ventilators%></td>
+                                                    <td><%= element.incharge_name%></td> 
+                                                    <td><%= element.telephone%></td> 
+                                                    
+                                                </tr>
+                                                
+                                            <% }) %>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>        
+                                </div>
+                            </div>
+                        </div> <!-- end col -->
+                    </div> <!-- end row -->
+
+                    <div id="custom-modal" class="modal-demo">
+                        <button type="button" class="close" onclick="Custombox.modal.close();"><span>×</span><span
+                                class="sr-only">Close</span></button>
+                        <div class="card">
+                            <div class="card-body">        
+                                <h4 class="mt-0 header-title">Add Section/Room</h4>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <form action="/add_section" method="post">
+                                            
+                                            <div class="form-group row">
+                                                <label for="example-text-input" class="col-sm-2 col-form-label text-right">Facility ID</label>
+                                                <div class="col-sm-10">
+                                                    <input list="center_list" class="form-control" type="text" name="center_id" id="example-text-input">
+                                                        <datalist id="center_list">
+                                                            <% centers_list.forEach(element => {  %>
+                                                                    <option value="<%= element.center_id%>"><%= element.facility_name%>, <%= element.category%>, <%= element.village%>, <%= element.block%></option>
+                                                            <% }) %>
+                                                        </datalist>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label text-right">Catagory</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" name="category" required>
+                                                        <option value="">Select a Category</option>
+                                                        <option value="ICU">ICU</option>
+                                                        <option value="GENERAL_WARD">General Ward</option>
+                                                        <option value="OXYGEN_WARD">Oxygen Ward</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Floor</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="number" name="floor" id="example-email-input">
+                                                </div>
+                                            </div> 
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Room Name</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="text" name="room_name" id="example-email-input">
+                                                </div>
+                                            </div> 
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">No Of Beds</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="number" name="no_of_beds" value="0" id="example-email-input">
+                                                </div>
+                                            </div> 
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">No of Ventilators if available</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="number" name="no_of_ventilators" value="0" id="example-email-input">
+                                                </div>
+                                            </div> 
+                                            <div class="form-group row">
+                                                <label for="example-tel-input" class="col-sm-2 col-form-label text-right">Incharge Name</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="text" name="incharge_name" id="example-tel-input">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-tel-input" class="col-sm-2 col-form-label text-right">Telephone</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="tel" name="telephone" id="example-tel-input">
+                                                </div>
+                                            </div>
+                                           
+
+                                                
+                                                
+                                                
+                                                
+                                            <div class="row">
+                                                <div class="col-sm-12 text-right">
+                                                    <button type="submit" class="btn btn-primary">Add Section/Room</button>
+                                                </div>
+                                            </div>  
+                                        </form>                       
+                                    </div>
+                                </div>                                                                      
+                            </div><!--end card-body-->
+                            <!--end card-body-->
+                        </div>
+                    </div>
+
+
+                </div><!-- container -->
+
+               
+            </div>
+<%- include("footer"); -%>

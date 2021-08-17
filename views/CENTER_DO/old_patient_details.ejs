@@ -1,0 +1,423 @@
+<%- include("header",{element: element}); -%>
+
+
+<!-- Page-Title -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-right align-item-center mt-2">
+                <!-- <a href="#custom-modal" class="btn btn-info px-4 align-self-center report-btn" data-animation="blur" data-plugin="custommodal" data-overlaycolor="#38414a">Add User</a> -->
+            </div>
+            <h4 class="page-title mb-2"><i class="mdi mdi-monitor mr-2"></i>Patient Details</h4>  
+            <div class="">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">District Covid Management</a></li>
+                    <li class="breadcrumb-item active">Patient Details</li>
+                </ol>
+            </div>                                      
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+<%- include("header2"); -%>
+            <!-- Page Content-->
+            <div class="page-content" style="overflow: scroll;">
+                    <div class="container" style="overflow: scroll;">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="mt-0 header-title">Patient Details</h4>                                    
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>Patient Id</th>
+                                                    <th>Patient Name</th>
+                                                    <th>Center ID</th>
+                                                    <th>Section ID</th>
+                                                    <th>Age</th>
+                                                    <th>Sex</th>
+                                                    <th>S/D/F/W Of</th>
+                                                    <th>Adress</th>
+                                                    <th>Village</th>
+                                                    <th>Block</th>
+                                                    <th>Telephone</th>
+                                                    <th>Alt Telephone</th>
+                                                    <th>Covid Status</th>
+                                                    <th>Covid Report</th>
+                                                    <th>Co Morbiditie</th>
+                                                    <th>Travel History</th>
+                                                    <th>Positive Declare Date</th>
+                                                    <th>Admission Date</th>
+                                                    <th>Bed No</th>
+                                                    
+                
+                                                </tr>
+                                           </thead>
+                                           <tbody>
+                                            <tr>
+                                                <td><%= patients_details.patient_id%></td>
+                                                <td><%= patients_details.patient_name%></td>
+                                                <td><%= patients_details.active_bed_details.center_id%></td>
+                                                <td><%= patients_details.active_bed_details.section_id%></td>
+                                                <td><%= patients_details.age%></td>
+                                                <td><%= patients_details.sex%></td>
+                                                <td><%= patients_details.s_d_w_of%></td>
+                                                <td><%= patients_details.address%></td>
+                                                <td><%= patients_details.village%></td>
+                                                <td><%= patients_details.block%></td>
+                                                <td><%= patients_details.telephone%></td>
+                                                <td><%= patients_details.alt_telephone%></td>
+                                                <td><%= patients_details.covid_status%></td>
+                                                <td><%= patients_details.covid_report%></td>
+                                                <td><%= patients_details.co_morbidities%></td>
+                                                <td><%= patients_details.travel_history%></td>
+                                                <td><%= patients_details.positive_declare_date%></td>
+                                                <td><%= patients_details.admission_date%></td>
+                                                <td><%= patients_details.active_bed_details.bed_no%></td>
+            
+                                            </tr>
+            
+                                               <!-- <tr>
+                                                   <th scope="row">2</th>
+                                                   <td>Jacob</td>
+                                                   <td>XYZ@Example.com</td>
+                                                   <td><span class="badge badge-boxed  badge-warning">Personal</span>
+                                                   </td>
+                                               </tr> -->
+                                            </tbody>
+                                        </table>
+                                        <!--end /table-->
+                                    </div>
+                                    <!--end /tableresponsive-->
+                                </div>
+                                <!--end card-body-->
+                            </div>
+                            <!--end card-->
+                        </div> <!-- end col -->
+
+                        <!-- health_status: {
+                            date: [String],
+                            time: [String],
+                            section_id: [String],
+                            bp: [String],
+                            spo2: [String],
+                            pulse: [String],
+                            temperature: [String],
+                            condition: [String]
+                        },
+                        active_bed_details: {
+                            date: String,
+                            center_id: String,
+                            section_id: String,
+                            bed_category: String,
+                            bed_no: String
+                        },
+                        previous_bed_details: {
+                            start_date: [String],
+                            end_date: [String],
+                            center_id: [String],
+                            bed_no: [String],
+                            section_id: [String],
+                            bed_category: [String]
+                        }, -->
+
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="mt-0 header-title">Active Bed Details</h4>
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <thead class="thead-light">
+                                                 <tr>
+                                                    <th>From Date</th>
+                                                    <th>Patient</th>
+                                                    <th>Center ID</th>
+                                                    <th>Center Details/th>
+                                                    <th>Section Id</th>
+                                                    <th>Bed Category</th>
+                                                    <th>Bed Number</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                        <td><%= patients_details.active_bed_details.date%></td>
+                                                        <td><%= patients_details.active_bed_details.center_id%></td>
+                                                        <td><%= center_details.name%> - <%= center_details.name%> -  <%= center_details.category%> </td>
+                                                        <td><%= patients_details.active_bed_details.section_id%></td>
+                                                        <td><%= patients_details.active_bed_details.bed_category%></td>
+                                                        <td><%= patients_details.active_bed_details.bed_no%></td>
+                                                        
+                                                    </tr>
+                                                <!-- <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>Jacob</td>
+                                                    <td>XYZ@Example.com</td>
+                                                    <td><span class="badge badge-boxed  badge-warning">Personal</span>
+                                                    </td>
+                                                </tr> -->
+                                             </tbody>
+                                        </table>
+                                        <!--end /table-->
+                                    </div>
+                                    <!--end /tableresponsive-->
+                                </div>
+                                <!--end card-body-->
+                            </div>
+                            <!--end card-->
+                        </div> <!-- end col -->
+
+
+
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="mt-0 header-title">Previous Bed Details</h4>
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <thead class="thead-light">
+                                                 <tr>
+                                                    <th>From Date</th>
+                                                    <th>To Date</th>
+                                                    <th>Center ID</th>
+                                                    <th>Section Id</th>
+                                                    <th>Bed Category</th>
+                                                    <th>Bed Number</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <!-- previous_bed_details: {
+                                                start_date: [String],
+                                                end_date: [String],
+                                                center_id: [String],
+                                                bed_no: [String],
+                                                section_id: [String],
+                                                bed_category: [String] -->
+                                            <tbody>
+                                                <% for( let index = 0; index < patients_details.previous_bed_details.start_date.length; index++ ) { %>
+                                                    <tr>
+                                                        <td><%= patients_details.previous_bed_details[index].start_date%></td>
+                                                        <td><%= patients_details.previous_bed_details[index].end_date%></td>
+                                                        <td><%= patients_details.previous_bed_details[index].center_id%></td>
+                                                        <td><%= patients_details.previous_bed_details[index].section_id%></td>
+                                                        <td><%= patients_details.previous_bed_details[index].bed_category%></td>
+                                                        <td><%= patients_details.previous_bed_details[index].bed_no%></td>
+                                                        
+                                                    </tr>
+                                                <% } %>
+                                                    
+                                                <!-- <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>Jacob</td>
+                                                    <td>XYZ@Example.com</td>
+                                                    <td><span class="badge badge-boxed  badge-warning">Personal</span>
+                                                    </td>
+                                                </tr> -->
+                                             </tbody>
+                                        </table>
+                                        <!--end /table-->
+                                    </div>
+                                    <!--end /tableresponsive-->
+                                </div>
+                                <!--end card-body-->
+                            </div>
+                            <!--end card-->
+                        </div> <!-- end col -->
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="mt-0 header-title">Health Records</h4>
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <!-- health_status: {
+                            date: [String],
+                            time: [String],
+                            section_id: [String],
+                            bp: [String],
+                            spo2: [String],
+                            pulse: [String],
+                            temperature: [String],
+                            condition: [String]
+                        }, -->
+                                            <thead class="thead-light">
+                                                 <tr>
+                                                    <th>Date</th>
+                                                    <th>Time</th>
+                                                    <th>Section Id</th>
+                                                    <th>BP</th>
+                                                    <th>SpO2</th>
+                                                    <th>Pulse</th>
+                                                    <th>Temperature</th>
+                                                    <th>Condition</th>
+                                                   
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <!-- previous_bed_details: {
+                                                start_date: [String],
+                                                end_date: [String],
+                                                center_id: [String],
+                                                bed_no: [String],
+                                                section_id: [String],
+                                                bed_category: [String] -->
+                                            <tbody>
+                                                <% for( let index = 0; index < patients_details.health_status.date.length; index++ ) { %>
+                                                    <tr>
+                                                        <td><%= patients_details.health_status[index].date%></td>
+                                                        <td><%= patients_details.health_status[index].time%></td>
+                                                        <td><%= patients_details.health_status[index].section_id%></td>
+                                                        <td><%= patients_details.health_status[index].bp%></td>
+                                                        <td><%= patients_details.health_status[index].spo2%></td>
+                                                        <td><%= patients_details.health_status[index].pulse%></td>
+                                                        <td><%= patients_details.health_status[index].temperature%></td>
+                                                        <td><%= patients_details.health_status[index].condition%></td>
+                                                        
+                                                    </tr>
+                                                <% } %>
+                                                    
+                                                <!-- <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>Jacob</td>
+                                                    <td>XYZ@Example.com</td>
+                                                    <td><span class="badge badge-boxed  badge-warning">Personal</span>
+                                                    </td>
+                                                </tr> -->
+                                             </tbody>
+                                        </table>
+                                        <!--end /table-->
+                                    </div>
+                                    <!--end /tableresponsive-->
+                                </div>
+                                <!--end card-body-->
+                            </div>
+                            <!--end card-->
+                        </div> <!-- end col -->
+
+
+
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="mt-0 header-title">Referrals</h4>
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <thead class="thead-light">
+                                                 <tr>
+                                                    <th>Referral Id</th>
+                                                    <th>Patient</th>
+                                                    <th>Date</th>
+                                                    <th>Centers</th>
+                                                    <th>Urgency</th>
+                                                    <th>Bed Category</th>
+                                                    <th>Referred By</th>
+                                                    <th>Referred Briefing</th>
+                                                    <th>Referred Status</th> <th>Referrer Details</th> 
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% referral_list.forEach(element => { if(element.referred_status==="ACTIVE" && element.from_center_id==="RRT") {%>
+                                                    <tr>
+                                                        <td><%= element.referral_id%></td>
+                                                        <td> <br><%= element.patient_id%> <br><%= element.patient_name%></td> 
+                                                        <td><%= element.referral_date %></td> 
+                                                        <td>From: <%= element.from_center_id%> <br>  <%= element.from_center_details %> To: <%= element.to_center_id%> <br>  <%= element.to_center_details %></td> 
+                                                        <td><%= element.urgency%></td> 
+                                                        <td><%= element.bed_category%></td> 
+                                                        <td><%= element.referred_by%></td> 
+                                                        <td><%= element.referred_briefing%></td>
+                                                         <% if (element.referred_status === "REJECTED") { %>
+                                                        <td> <span class="badge badge-boxed  badge-danger"><%= element.referred_status%></span></td>
+                                                        
+                                                    <% }else if (element.referred_status === "ACCEPTED" || element.referred_status === "SERVED" ){ %>
+                                                        <td> <span class="badge badge-boxed  badge-success"><%= element.referred_status%></span></td>
+                                                    <% } else{ %>   
+                                                                                                                <td> <span class="badge badge-boxed  badge-warning"><%= element.referred_status%></span></td>
+                                                    <% } %>
+                                                    <td><%= element.referrer_details.name%> <br><%= element.referrer_details.phonenumber%> </td>
+                                                        
+                                                    </tr>
+                                                <% }}) %>
+                                                <!-- <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>Jacob</td>
+                                                    <td>XYZ@Example.com</td>
+                                                    <td><span class="badge badge-boxed  badge-warning">Personal</span>
+                                                    </td>
+                                                </tr> -->
+                                             </tbody>
+                                        </table>
+                                        <!--end /table-->
+                                    </div>
+                                    <!--end /tableresponsive-->
+                                </div>
+                                <!--end card-body-->
+                            </div>
+                            <!--end card-->
+                        </div> <!-- end col -->
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+        <h4 class="mt-0 header-title">Previous Referrals</h4>
+                                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive " style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                        <thead class="thead-light">
+                                            <tr>
+                                               <th>Referral Id</th>
+                                               <th>Patient</th>
+                                               <th>Date</th>
+                                               <th>Centers</th>
+                                               <th>Urgency</th>
+                                               <th>Bed Category</th>
+                                               <th>Referred By</th>
+                                               <th>Referred Briefing</th>
+                                               <th>Referred Status</th> <th>Referrer Details</th> 
+                                           </tr>
+                                       </thead>
+                                       <tbody>
+                                           <% referral_list.forEach(element => { if(element.referred_status !=="ACCEPTED" && element.referred_status !=="ACTIVE") {%>
+                                               <tr>
+                                                   <td><%= element.referral_id%></td>
+                                                   <td> <br><%= element.patient_id%> <br><%= element.patient_name%></td> 
+                                                   <td><%= element.referral_date %></td> 
+                                                   <td>From: <%= element.from_center_id%> <br>  <%= element.from_center_details %> </td> 
+                                                   <td><%= element.urgency%></td> 
+                                                   <td><%= element.bed_category%></td> 
+                                                   <td><%= element.referred_by%></td> 
+                                                   <td><%= element.referred_briefing%></td>
+                                                    <% if (element.referred_status === "REJECTED") { %>
+                                                        <td> <span class="badge badge-boxed  badge-danger"><%= element.referred_status%></span></td>
+                                                        
+                                                    <% }else if (element.referred_status === "ACCEPTED" || element.referred_status === "SERVED" ){ %>
+                                                        <td> <span class="badge badge-boxed  badge-success"><%= element.referred_status%></span></td>
+                                                    <% } else{ %>   
+                                                                                                                <td> <span class="badge badge-boxed  badge-warning"><%= element.referred_status%></span></td>
+                                                    <% } %>
+                                                    <td><%= element.referrer_details.name%> <br><%= element.referrer_details.phonenumber%> </td>
+                                                   
+                                               </tr>
+                                           <% }}) %>
+                                           <!-- <tr>
+                                               <th scope="row">2</th>
+                                               <td>Jacob</td>
+                                               <td>XYZ@Example.com</td>
+                                               <td><span class="badge badge-boxed  badge-warning">Personal</span>
+                                               </td>
+                                           </tr> -->
+                                        </tbody>
+                                        </table>
+                                        <!--end /table-->
+                                    </div>
+                                    <!--end /tableresponsive-->
+                                </div>
+                                <!--end card-body-->
+                            </div>
+                            <!--end card-->
+                        </div> <!-- end col -->
+                    </div> <!-- end row -->
+
+                </div><!-- container -->
+                
+            </div>
+<%- include("footer"); -%>

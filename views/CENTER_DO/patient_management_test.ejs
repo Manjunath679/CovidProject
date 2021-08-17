@@ -1,0 +1,2050 @@
+<%- include("header",{element: element}); -%>
+
+<!-- Page-Title -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-right align-item-center mt-2">
+                <button type="button" class="btn btn-info px-4 align-self-center report-btn" data-toggle="modal"
+                    data-target=".bd-example-modal-xl">Add Patient</button>
+
+            </div>
+            <h4 class="page-title mb-2"><i class="mdi mdi-monitor mr-2"></i>Patient Management</h4>
+            <div class="">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">District Covid Management</a></li>
+                    <li class="breadcrumb-item active">Patient Management</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+<%- include("header2"); -%>
+<script>
+    document.getElementById("dp1").value = "16/05/2021";
+</script>
+<!-- Page Content-->
+<div class="page-content" style="overflow: scroll;">
+    <div class="container" style="overflow: scroll;">
+
+
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mt-0 header-title">Incoming Patient (Referrals)</h4>
+                        <div class="table-responsive">
+                            <table id="incoming_patients_list"
+                                class="table table-striped table-bordered dt-responsive nowrap"
+                                style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Referral Id</th>
+                                        <th>Patient</th>
+                                        <th>Date</th>
+                                        <!-- <th>Ambulance Details</th> -->
+                                        <th>Centers</th>
+                                        <th>Urgency</th>
+                                        <th>Bed Category</th>
+
+                                        <th>Referrer Details</th>
+                                        <!-- <th>Ambulance Details</th> -->
+                                        <th>Action</th>
+                                        <th>Patient Record</th>
+                                        <th>Referred Status</th>
+
+                                        <th>Referred By</th>
+                                        <th>Referred Briefing</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% referral_list.forEach(element => { if(element.referred_status==="SHIFTING") {%>
+                                    <tr>
+                                        <td><%= element.referral_id%></td>
+                                        <td> <br><%= element.patient_id%> <br><%= element.patient_name%></td>
+                                        <!-- <td>Driver Name<%= element.ambulance_driver_name%> <br> Driver Number <%=element.ambulance_driver_number%> <br> Vehicle Number: <%=element.ambulance_number%></td>  -->
+                                        <td><%= element.referral_date %></td>
+                                        <td><%= element.from_center_id%> <br> <%= element.from_center_details %> </td>
+                                        <td><%= element.urgency%></td>
+                                        <td><%= element.bed_category%></td>
+                                        <td><%= element.referrer_details.name%>
+                                            <br><%= element.referrer_details.phonenumber%> </td>
+
+
+
+                                        <!-- <td><%= element.ambulance_driver_name%> <br><%= element.ambulance_driver_number%>  <br> <%= element.ambulance_number%> </td> -->
+                                        <td>
+                                            <button
+                                                onclick="setreadmitmodal('<%= element.referral_id%>', '<%= element.patient_id%>', '<%= element.patient_name%>')"
+                                                type="button" class="btn btn-info px-4 align-self-center report-btn"
+                                                data-toggle="modal" data-target=".bd-example-modal-readmit">Add
+                                                Patient</button> <br><br>
+                                            <button
+                                                onclick="setnsmodal('<%= element.referral_id%>', '<%= element.patient_id%>', '<%= element.patient_name%>')"
+                                                type="button" class="btn btn-info px-4 align-self-center report-btn"
+                                                data-toggle="modal" data-target=".bd-example-modal-notshowing">Not
+                                                Shown</button> <br><br>
+                                        </td>
+                                        <td><a href="/patientdetails/<%= element.patient_id%>">Click Here</a></td>
+                                        <% if (element.referred_status === "REJECTED") { %>
+                                        <td> <span
+                                                class="badge badge-boxed  badge-danger"><%= element.referred_status%></span>
+                                        </td>
+
+                                        <% }else if (element.referred_status === "ACCEPTED" || element.referred_status === "SERVED" ){ %>
+                                        <td> <span
+                                                class="badge badge-boxed  badge-success"><%= element.referred_status%></span>
+                                        </td>
+                                        <% } else{ %>
+                                        <td> <span
+                                                class="badge badge-boxed  badge-warning"><%= element.referred_status%></span>
+                                        </td>
+                                        <% } %>
+                                        <td><%= element.referred_by%></td>
+                                        <td><%= element.referred_briefing%></td>
+
+
+                                    </tr>
+                                    <% }}) %>
+                                    <!-- <tr>
+                                       <th scope="row">2</th>
+                                       <td>Jacob</td>
+                                       <td>XYZ@Example.com</td>
+                                       <td><span class="badge badge-boxed  badge-warning">Personal</span>
+                                       </td>
+                                   </tr> -->
+                                </tbody>
+                            </table>
+                            <!--end /table-->
+                        </div>
+                        <!--end /tableresponsive-->
+                    </div>
+                    <!--end card-body-->
+                </div>
+                <!--end card-->
+            </div> <!-- end col -->
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mt-0 header-title">Active Patient List</h4>
+                        <table id="do_patient_list" class="table table-striped table-bordered dt-responsive nowrap"
+                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <!-- <th>IPD/REGD No</th> -->
+                                    <th>Patient Details</th>
+                                    <!-- <th>District</th> -->
+                                    <th class='notexport'>Actions</th>
+                                    <th>Bed Details</th>
+                                    <th>Bed Category</th>
+                                    <th>Admission</th>
+                                    <th>Current Health</th>
+                                    <th>Vaccination Details</th>
+                                    <th>Previous Covid Date</th>
+                                    <th>Symptoms</th>
+                                    <th>Adress</th>
+                                    <th>Covid Status</th>
+                                    <th>Swap Collection Date</th>
+                                    <th>Covid Report</th>
+                                    <th>Co Morbiditie</th>
+                                    <th>Travel History</th>
+                                    <th>Positive Declare Date</th>
+                                    <th>Admission Date</th>
+                                    <th>Patient Id</th>
+                                    <th>Patient Record</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <% patients_list.forEach(element => { if(element.discharge_status==="ACTIVE") { %>
+
+                                <tr>
+                                    <!-- <td>
+                                        <%= element.ipd_no%> 
+                                    </td> -->
+                                    <td>
+                                        ID: <%= element.patient_id%> <br>
+                                        Name: <%= element.patient_name%><br>
+                                        Age: <%= element.age%> , Sex: <%= element.sex%><br>
+                                        IPD: <%= element.ipd_no%><br>
+                                        <button style="color:#007bff;padding: 0px;"
+                                            onclick="seteditmodal('<%= element.patient_id%>')" type="button"
+                                            class="btn btn-info-outline report-btn" data-toggle="modal"
+                                            data-target=".bd-example-modal-xl-edit"><i class="fas fa-edit"></i>
+                                            Edit</button>
+                                    </td>
+                                    <!-- <td>
+                                        Village: <%= element.village%><br> 
+                                        Block: <%= element.block%><br> 
+                                        District: <%= element.district%><br> 
+                                        Telephone: <%= element.telephone%><br> 
+                                        Family: <%= element.s_d_w_of%><br> 
+                                        Family Ph: <%= element.alt_telephone%><br>
+                                        Edit :<button
+                                        onclick="seteditmodal('<%= element.patient_id%>')" 
+                                        type="button" class="btn btn-info-outline px-4 align-self-center report-btn" data-toggle="modal"
+                                        data-target=".bd-example-modal-xl-edit"><i class="fas fa-edit"></i></button>
+
+                                    </td> -->
+                                    <!-- <td><%= element.district%><br> </td> -->
+
+                                    <td>
+                                        <button
+                                            onclick="setdischargemodal('<%= element.patient_id%>', '<%= element.patient_name%>')"
+                                            href="#custom-modal" class="btn btn-info px-4 align-self-center report-btn"
+                                            data-animation="blur" data-plugin="custommodal" data-overlaycolor="#38414a"
+                                            title="Discharge">Discharge</button>
+                                        <button
+                                            onclick="setheathtrecordmodal('<%= element.patient_id%>', '<%= element.patient_name%>')"
+                                            href="#custom-modal-health-record"
+                                            class="btn btn-info px-4 align-self-center report-btn" data-animation="blur"
+                                            data-plugin="custommodal" data-overlaycolor="#38414a"
+                                            title="Discharge">Update Health</button><br><br>
+                                        <button
+                                            onclick="setshiftmodal('<%= element.patient_id%>', '<%= element.patient_name%>', '<%= element.active_bed_details.section_id%>')"
+                                            href="#custom-modal-shift-section"
+                                            class="btn btn-info px-4 align-self-center report-btn" data-animation="blur"
+                                            data-plugin="custommodal" data-overlaycolor="#38414a"
+                                            title="Discharge">Shift Patient</button>
+                                        <button
+                                            onclick="setrefermodal('<%= element.patient_id%>', '<%= element.patient_name%>', '<%= element.active_bed_details.center_id%>')"
+                                            href="#custom-modal-refer"
+                                            class="btn btn-info px-4 align-self-center report-btn" data-animation="blur"
+                                            data-plugin="custommodal" data-overlaycolor="#38414a"
+                                            title="Discharge">Refer</button>
+
+                                    </td>
+
+                                    <td>
+                                        Bed No: <%= element.active_bed_details.bed_no%> <br>
+                                        <%= element.active_bed_details.bed_category%> <br>
+                                        <!-- <%= element.active_bed_details.center_details%> <br> -->
+                                        <%= element.active_bed_details.section_details%> <br>
+
+                                        <a href="/patientdetails/<%= element.patient_id%>">See More</a> <br>
+                                    </td>
+                                    <td><%= element.active_bed_details.bed_category%></td>
+                                    <td><%= element.admission_date%></td>
+                                    <td>Date: <%= element.active_health_status.date%> <br>
+                                        Time: <%= element.active_health_status.time%> <br>
+                                        Bp: <%= element.active_health_status.bp%> <br>
+                                        SpO2: <%= element.active_health_status.spo2%> <br>
+                                        Pulse: <%= element.active_health_status.pulse%> <br>
+                                        FBS: <%= element.active_health_status.fbs%> <br>
+                                        RBD: <%= element.active_health_status.rbs%> <br>
+                                        Temperature: <%= element.active_health_status.temperature%> <br>
+                                        Condition: <%= element.active_health_status.condition%> <br>
+                                        <a href="/patientdetails/<%= element.patient_id%>">See More</a> <br>
+                                    </td>
+                                    <td><%= element.vaccination%> <br> <%= element.vaccination_date%></td>
+                                    <td><%= element.previous_covid%> <br> <%= element.previous_covid_date%></td>
+                                    <td><%= element.symptoms%> <br> <%= element.date_symptoms%></td>
+
+                                    <td><%= element.address%></td>
+                                    <td><%= element.covid_status%></td>
+                                    <td><%= element.swap_collection_date%></td>
+
+                                    <td><%= element.covid_report%></td>
+                                    <td><%= element.co_morbidities%></td>
+                                    <td><%= element.travel_history%></td>
+                                    <td><%= element.positive_declare_date%></td>
+                                    <td><%= element.admission_date%></td>
+                                    <td><%= element.patient_id%></td>
+                                    <td><a href="/patientdetails/<%= element.patient_id%>">Click Here</a>
+                                        <input type="hidden" id="<%= element.patient_id%>-get-ipd_no"
+                                            value="<%= element.ipd_no%>">
+                                        <input type="hidden" id="<%= element.patient_id%>-get-patient_id"
+                                            value="<%= element.patient_id%>">
+                                        <input type="hidden" id="<%= element.patient_id%>-get-patient_name"
+                                            value="<%= element.patient_name%>">
+                                        <input type="hidden" id="<%= element.patient_id%>-get-age"
+                                            value="<%= element.age%>">
+                                        <input type="hidden" id="<%= element.patient_id%>-get-sex"
+                                            value="<%= element.sex%>">
+                                        <input type="hidden" id="<%= element.patient_id%>-get-village"
+                                            value="<%= element.village%>">
+                                        <input type="hidden" id="<%= element.patient_id%>-get-block"
+                                            value="<%= element.block%>">
+                                        <input type="hidden" id="<%= element.patient_id%>-get-district"
+                                            value="<%= element.district%>">
+                                        <input type="hidden" id="<%= element.patient_id%>-get-telephone"
+                                            value="<%= element.telephone%>">
+                                        <input type="hidden" id="<%= element.patient_id%>-get-s_d_w_of"
+                                            value="<%= element.s_d_w_of%>">
+                                        <input type="hidden" id="<%= element.patient_id%>-get-address"
+                                            value="<%= element.address%>">
+                                        <input type="hidden" id="<%= element.patient_id%>-get-co_morbidities"
+                                            value="<%= element.co_morbidities%>">
+                                        <input type="hidden" id="<%= element.patient_id%>-get-alt_telephone"
+                                            value="<%= element.alt_telephone%>">
+                                        <input type="hidden" id="<%= element.patient_id%>-get-admission_date"
+                                            value="<%= element.admission_date%>">
+                                    </td>
+                                </tr>
+
+
+
+                                <% }}) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+
+
+
+
+        <!-- sample modal content -->
+        <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0" id="myModalLabel">Patient Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/add_patient" method="POST">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group row">
+                                        <label for="example-text-input"
+                                            class="col-sm-3 col-form-label text-right">IPD/REDG No </label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" name="ipd_no"
+                                                id="example-text-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-text-input"
+                                            class="col-sm-3 col-form-label text-right">Patient Name</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" name="patient_name"
+                                                id="example-text-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-number-input"
+                                            class="col-sm-3 col-form-label text-right">Age</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="number" name="age"
+                                                id="example-number-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label text-right">Sex</label>
+                                        <div class="col-sm-9">
+                                            <select required class="form-control" name="sex">
+                                                <option value="">Select a field</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Others">Others</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-number-input" class="col-sm-3 col-form-label text-right">S /
+                                            W / D of</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" name="s_d_w_of"
+                                                id="example-number-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-number-input"
+                                            class="col-sm-3 col-form-label text-right">Address</label>
+                                        <div class="col-sm-9">
+                                            <textarea required class="form-control" name="address" id="" cols="30"
+                                                rows="2"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-text-input"
+                                            class="col-sm-3 col-form-label text-right">Village / City / NAC</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" name="village"
+                                                id="example-text-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-text-input"
+                                            class="col-sm-3 col-form-label text-right">Block</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" list="block_list" type="text" name="block"
+                                                id="example-text-input" required>
+                                                <option value="">Select</option>
+                                                <option value="ASKA">ASKA</option>
+                                                <option value="BEGUNIAPADA_KODALA">BEGUNIAPADA_KODALA</option>
+                                                <option value="BELLAGUNTHA">BELLAGUNTHA</option>
+                                                <option value="BHANJANAGAR">BHANJANAGAR</option>
+                                                <option value="BUGUDA">BUGUDA</option>
+                                                <option value="CHATRAPUR">CHATRAPUR</option>
+                                                <option value="CHIKITI">CHIKITI</option>
+                                                <option value="DHARAKOTE">DHARAKOTE</option>
+                                                <option value="DIGAPAHANDI">DIGAPAHANDI</option>
+                                                <option value="GANJAM">GANJAM</option>
+                                                <option value="HINJILICUT">HINJILICUT</option>
+                                                <option value="J.N.PRASAD">Jagannathprasad</option>
+                                                <option value="K.S.NAGAR">Kabisurya Nagar </option>
+                                                <option value="KHALLIKOTE">KHALLIKOTE</option>
+                                                <option value="KUKUDAKHANDI">KUKUDAKHANDI</option>
+                                                <option value="PATRAPUR">PATRAPUR</option>
+                                                <option value="POLOSARA">POLOSARA</option>
+                                                <option value="PURUSHOTTAMPUR">PURUSHOTTAMPUR</option>
+                                                <option value="RANGEILUNDA">RANGEILUNDA</option>
+                                                <option value="SANAKHEMUNDI">SANAKHEMUNDI</option>
+                                                <option value="SHERAGADA">SHERAGADA</option>
+                                                <option value="SURADA">SURADA</option>
+                                                <option value="BeMC">Berhampur</option>
+                                                <option value="OTHER">OTHER</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-text-input"
+                                            class="col-sm-3 col-form-label text-right">District</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" type="text" name="district"
+                                                id="example-text-input" required>
+                                                <option value="">Select</option>
+                                                <option value="Ganjam">Ganjam</option>
+                                                <option value="Angul">Angul</option>
+                                                <option value="Boudh">Boudh</option>
+                                                <option value="Balangir">Balangir</option>
+                                                <option value="Bargarh">Bargarh</option>
+                                                <option value="Balasore">Balasore</option>
+                                                <option value="Bhadrak">Bhadrak</option>
+                                                <option value="Deogarh">Deogarh</option>
+                                                <option value="Dhenkanal">Dhenkanal</option>
+                                                <option value="Gajapati">Gajapati</option>
+                                                <option value="Jharsuguda">Jharsuguda</option>
+                                                <option value="Khordha">Khordha</option>
+                                                <option value="Keonjhar">Keonjhar</option>
+                                                <option value="Kalahandi">Kalahandi</option>
+                                                <option value="Koraput">Koraput</option>
+                                                <option value="Kendrapara">Kendrapara</option>
+                                                <option value="Malkangiri">Malkangiri</option>
+                                                <option value="Mayurbhanj">Mayurbhanj</option>
+                                                <option value="Nabarangpur">Nabarangpur</option>
+                                                <option value="Nuapada">Nuapada</option>
+                                                <option value="Nayagarh">Nayagarh</option>
+                                                <option value="Puri">Puri</option>
+                                                <option value="Rayagada">Rayagada</option>
+                                                <option value="Sambalpur">Sambalpur</option>
+                                                <option value="Subarnapur">Subarnapur(Sonepur)</option>
+                                                <option value="Sundargarh">Sundargarh</option>
+                                                <option value="Others">Others</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input"
+                                            class="col-sm-3 col-form-label text-right">Contact</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="tel" name="telephone"
+                                                id="example-tel-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-tel-input" class="col-sm-3 col-form-label text-right">Family
+                                            Contact</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="tel" name="alt_telephone"
+                                                id="example-tel-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-tel-input"
+                                            class="col-sm-3 col-form-label text-right">Referral Details</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" name="referrals"
+                                                id="example-tel-input">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input" class="col-sm-3 col-form-label text-right">Is the
+                                            Person infected with Covid before ?</label>
+                                        <div class="col-sm-5">
+
+                                            <select required class="form-control" name="previous_covid">
+                                                <option value="">Select a field</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="NA">N/A</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+
+                                            <input class="form-control" type="date" name="previous_covid_date"
+                                                id="example-number-input">
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-6">
+
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input"
+                                            class="col-sm-3 col-form-label text-right">Vaccination Details </label>
+                                        <div class="col-sm-5">
+
+                                            <select required class="form-control" name="vaccination">
+                                                <option value="">Select a field</option>
+                                                <option value="NO">Not Vaccinated</option>
+                                                <option value="single_dose">Single Dose</option>
+                                                <option value="double_dose">Double Dose</option>
+                                                <option value="NA">N/A</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+
+                                            <input class="form-control" type="date" name="vaccination_date"
+                                                id="example-number-input">
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label text-right">Covid Position (Y/N) during
+                                            admission
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <select required class="form-control" name="covid_status">
+                                                <option value="">Select a field</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="NA">N/A</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label text-right">Covid Report (+ve / -ve)
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <select required class="form-control" name="covid_report">
+                                                <option value="">Select a field</option>
+                                                <option value="POSITIVE">POSITIVE</option>
+                                                <option value="NEGATIVE">NEGATIVE</option>
+                                                <option value="NA">N/A</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-number-input"
+                                            class="col-sm-3 col-form-label text-right">Date of Swap Collection
+                                            as Covid +Ve
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="date" name="swap_collection_date"
+                                                id="example-number-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-number-input"
+                                            class="col-sm-3 col-form-label text-right">Date of Declaration
+                                            as Covid +Ve
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="date" name="positive_declare_date"
+                                                id="example-number-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-number-input"
+                                            class="col-sm-3 col-form-label text-right">Date of Admission
+
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="date" name="admission_date"
+                                                id="example-number-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-number-input"
+                                            class="col-sm-3 col-form-label text-right">Details regarding
+                                            Symptoms
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control" class="form-control" name="symptoms" id=""
+                                                cols="30" rows="2"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-number-input"
+                                            class="col-sm-3 col-form-label text-right">Date of onset of
+                                            Symptoms
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="date" class="form-control"
+                                                name="date_symptoms" id="" cols="30" rows="2">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-number-input"
+                                            class="col-sm-3 col-form-label text-right">Details regarding
+                                            Co-morbidities
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <textarea required class="form-control" class="form-control"
+                                                name="co_morbidities" id="" cols="30" rows="2"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label text-right">History of Travel/Contact
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <select required class="form-control" name="travel_history">
+                                                <option value="">Select a field</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="NA">N/A</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-12">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title mt-0" id="myModalLabel">Present Health Details</h5>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4"> <br>
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input"
+                                            class="col-sm-3 col-form-label text-right">SpO2</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" name="spo2"
+                                                id="example-number-input">
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+                                <div class="col-lg-4"> <br>
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input"
+                                            class="col-sm-3 col-form-label text-right">Pulse/Heart Rate</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" name="heart_rate"
+                                                id="example-number-input">
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="col-lg-4"> <br>
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input" class="col-sm-3 col-form-label text-right">Blood
+                                            Pressure</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" name="bp"
+                                                id="example-number-input">
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                </div>
+                                <div class="col-lg-4"> <br>
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input"
+                                            class="col-sm-3 col-form-label text-right">Temperature</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" name="temp"
+                                                id="example-number-input">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="col-lg-4"> <br>
+
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input" class="col-sm-3 col-form-label text-right">Blood
+                                            Sugar </label>
+                                        <div class="col-sm-4">
+                                            <input required class="form-control" placeholder="FBS (Fasting Blood Sugar)"
+                                                type="text" name="fbs" id="example-tel-input">
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <input required class="form-control" placeholder="RBS (Random Blood Sugar)"
+                                                type="text" name="rbs" id="example-tel-input">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-4"> <br>
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input"
+                                            class="col-sm-3 col-form-label text-right">Condition</label>
+                                        <div class="col-sm-9">
+                                            <select required class="form-control" type="text" name="condition"
+                                                id="example-tel-input">
+                                                <option value=""> Select</option>
+                                                <option value="STABLE"> STABLE</option>
+                                                <option value="PROGRESSING"> PROGRESSING</option>
+                                                <option value="DETERIORATING"> DETERIORATING</option>
+                                                <option value="CRITICAL"> CRITICAL</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+                                <div class="col-lg-12">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title mt-0" id="myModalLabel">Bed Details</h5>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4"> <br>
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input"
+                                            class="col-sm-3 col-form-label text-right">Center</label>
+                                        <div class="col-sm-9">
+                                            <select oninput="get_available_bed_catagory(this.value)" required
+                                                class="form-control" type="text" name="center_id"
+                                                id="get-value-center_id">
+
+                                                <% centers_list.forEach(element => {  %>
+                                                <option value="<%= element.center_id%>">
+                                                    <%= element.center_id%>-<%= element.facility_name%> -
+                                                    <%= element.category%></option>
+                                                <% }) %>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+                                <div class="col-lg-4"> <br>
+
+                                    <div class="form-group row">
+                                        <label  for="example-tel-input" class="col-sm-3 col-form-label text-right">Bed
+                                            Category</label>
+                                        <div class="col-sm-9">
+                                            <select oninput="get_available_sections(this.value)" required class="form-control" id="set-bed-category-list" type="text" name="bed_category"
+                                                >
+                                                <option value=""> Select</option>
+                                                
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+                                <div class="col-lg-4"> <br>
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input"
+                                            class="col-sm-3 col-form-label text-right">Section</label>
+                                        <div class="col-sm-9">
+                                            <select required class="form-control"
+                                                type="text" name="section_id" id="set-sections-list">
+                                                <option value=""> Select</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+                               
+                                <div class="col-lg-4"> <br>
+
+
+                                    <div class="form-group row">
+                                        <label for="example-tel-input" class="col-sm-3 col-form-label text-right">Bed
+                                            No</label>
+                                        <div class="col-sm-9">
+                                            <input required class="form-control" type="text" name="bed_no"
+                                                id="example-tel-input">
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="col-sm-12 text-right">
+                                            <button type="submit" class="btn btn-primary">Add Patient</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                    </div>
+                    </form>
+
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+    <script>
+        function get_available_bed_catagory(center_id) {
+            console.log(center_id);
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var b_dt = JSON.parse(this.responseText);
+                    doms = document.getElementById("set-bed-category-list");
+                        var length = doms.options.length;
+                        for (ji = length-1; ji >= 0; ji--) {
+                            doms.options[ji] = null;
+                        }
+                      
+                    OBA=false
+                    GBA=false
+                    HBA=false
+                    IBA=false
+                    VBA=false
+                    var opt = document.createElement("option");
+                    opt.value = "";
+                    opt.text = "Select";
+                doms.appendChild(opt);
+                    for (var i = 0; i < b_dt.hospital_list.length; i++) {
+                        element = b_dt.hospital_list[i];
+                       
+
+                    // total_bed_available: Number(element.no_of_general_beds + element.no_of_oxygen_beds + element.no_of_icu_beds + element.no_of_ventilator_beds + element.no_isolation_beds + element.no_hdu_beds),
+                    // total_oxygen_bed_available: element.no_of_oxygen_beds - OXYGEN_BED_COUNT,
+                    // total_general_bed_available: element.no_of_general_beds - GENERAL_BED_COUNT,
+                    // total_icu_bed_available: element.no_of_ventilator_beds+element.no_of_icu_beds - ICU_BED_COUNT,
+                    // total_ventilator_bed_available: element.no_of_ventilator_beds - VENTILATOR_BED_COUNT,
+                    // total_hdu_bed_available: element.no_hdu_beds - HDU_BED_COUNT,
+
+                        if(element.total_bed_available>=1){}
+                        if(!OBA && element.total_oxygen_bed_available>=1){
+                            OBA=true
+                            var option = document.createElement("option");
+                        option.value = "OXYGEN_BED";
+                        option.text = "GENERAL BED WITH OXYGEN";
+                        doms.appendChild(option);
+
+                        }
+                        if(!GBA &&element.total_general_bed_available>=1){
+                            GBA=true
+                            var option = document.createElement("option");
+                        option.value = "GENERAL_BED";
+                        option.text = "GENERAL BED WITH OUT OXYGEN";
+                        doms.appendChild(option);
+                        }
+                        if(!IBA &&element.total_icu_bed_available>=1){
+                            IBA=true
+                            var option = document.createElement("option");
+                        option.value = "ICU_BED";
+                        option.text = "ICU BED WITH OUT VENTELATOR";
+                        doms.appendChild(option);
+                        }
+                        if(!VBA &&element.total_ventilator_bed_available>=1){
+                            VBA=true
+                            var option = document.createElement("option");
+                        option.value = "VENTILATOR_BED";
+                        option.text = "ICU BED WITH VENTILATOR";
+                        doms.appendChild(option);
+                        }
+                        if(!HBA &&element.total_hdu_bed_available>=1){
+                            HBA=true
+                            var option = document.createElement("option");
+                        option.value = "HDU_BED";
+                        option.text = "HDU BED(Highly Dependent Unit)";
+                        doms.appendChild(option);
+                        }
+                        
+
+                    }
+
+                    // for (var i = 0; i < b_dt.hospital_list.length; i++) {
+                    //     element = b_dt.hospital_list[i];
+                    //     doms = document.getElementById("get-section-list");
+                        
+                    //     var option = document.createElement("option");
+                    //     option.value = element.section_id;
+                    //     option.text = element.section_id + "-" + element.section_details;
+                    //     doms.appendChild(option);
+
+                    // }
+
+
+                } else {
+                    var b_dt = JSON.parse(this.responseText);
+                }
+            };
+            xhttp.open("GET", "/api/bed-details/" + center_id, true);
+            xhttp.send();
+
+
+
+        }
+    
+
+
+function get_available_sections(b_c) {
+    center_id=document.getElementById("get-value-center_id").value;
+    console.log(center_id);
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var b_dt = JSON.parse(this.responseText);
+            var doms = document.getElementById("set-sections-list");
+                var length = doms.options.length;
+                for (ji = length-1; ji >= 0; ji--) {
+                    doms.options[ji] = null;
+                }
+
+                var opt = document.createElement("option");
+                    opt.value = "";
+                    opt.text = "Select";
+                    doms.appendChild(opt);
+
+            for (var i = 0; i < b_dt.hospital_list.length; i++) {
+                element = b_dt.hospital_list[i];
+               
+
+            // total_bed_available: Number(element.no_of_general_beds + element.no_of_oxygen_beds + element.no_of_icu_beds + element.no_of_ventilator_beds + element.no_isolation_beds + element.no_hdu_beds),
+            // total_oxygen_bed_available: element.no_of_oxygen_beds - OXYGEN_BED_COUNT,
+            // total_general_bed_available: element.no_of_general_beds - GENERAL_BED_COUNT,
+            // total_icu_bed_available: element.no_of_ventilator_beds+element.no_of_icu_beds - ICU_BED_COUNT,
+            // total_ventilator_bed_available: element.no_of_ventilator_beds - VENTILATOR_BED_COUNT,
+            // total_hdu_bed_available: element.no_hdu_beds - HDU_BED_COUNT,
+            
+                if(element.total_bed_available>=1){}
+                if(b_c==="OXYGEN_BED" && element.total_oxygen_bed_available>=1){
+                    var opt = document.createElement("option");
+                    opt.value = element.section_id;
+                    opt.text = element.section_id + "-" + element.section_details+" (AVL: "+element.total_oxygen_bed_available+" )";
+                doms.appendChild(opt);
+
+                }
+
+                if(b_c==="GENERAL_BED" && element.total_general_bed_available>=1){
+                    var opt = document.createElement("option");
+                    opt.value = element.section_id;
+                    opt.text = element.section_id + "-" + element.section_details+" (AVL: "+element.total_general_bed_available+" )";
+                doms.appendChild(opt);
+                }
+                if(b_c==="ICU_BED" && element.total_icu_bed_available>=1){
+                    var opt = document.createElement("option");
+                    opt.value = element.section_id;
+                    opt.text = element.section_id + "-" + element.section_details+" (AVL: "+element.total_icu_bed_available+" )";
+                doms.appendChild(opt);
+                }
+                if(b_c==="VENTILATOR_BED" && element.total_ventilator_bed_available>=1){
+                    var opt = document.createElement("option");
+                    opt.value = element.section_id;
+                    opt.text = element.section_id + "-" + element.section_details+" (AVL: "+element.total_ventilator_bed_available+" )";
+                doms.appendChild(opt);
+                }
+                if(b_c==="HDU_BED" && element.total_hdu_bed_available>=1){
+                    var opt = document.createElement("option");
+                    opt.value = element.section_id;
+                    opt.text = element.section_id + "-" + element.section_details+" (AVL: "+element.total_hdu_bed_available+" )";
+                    
+                    doms.appendChild(opt);
+                }
+
+
+                if(b_c==="OXYGEN_BED" && element.total_oxygen_bed_available<1){
+                    var opt = document.createElement("option");
+                    opt.disabled = true;
+                    opt.value = element.section_id;
+                    opt.text = element.section_id + "-" + element.section_details+" (AVL: "+element.total_oxygen_bed_available+" )";
+                doms.appendChild(opt);
+
+                }
+                if(b_c==="HDU_BED" && element.total_hdu_bed_available<1){
+                    var opt = document.createElement("option");
+                    opt.disabled = true;
+                    opt.value = element.section_id;
+                    opt.text = element.section_id + "-" + element.section_details+" (AVL: "+element.total_hdu_bed_available+" )";
+                doms.appendChild(opt);
+
+                }
+                if(b_c==="VENTILATOR_BED" && element.total_ventilator_bed_available<1){
+                    var opt = document.createElement("option");
+                    opt.disabled = true;
+                    opt.value = element.section_id;
+                    opt.text = element.section_id + "-" + element.section_details+" (AVL: "+element.total_ventilator_bed_available+" )";
+                doms.appendChild(opt);
+
+                }
+                if(b_c==="ICU_BED" && element.total_icu_bed_available<1){
+                    var opt = document.createElement("option");
+                    opt.disabled = true;
+                    opt.value = element.section_id;
+                    opt.text = element.section_id + "-" + element.section_details+" (AVL: "+element.total_icu_bed_available+" )";
+                doms.appendChild(opt);
+
+                }
+                if(b_c==="GENERAL_BED" && element.total_general_bed_available<1){
+                    var opt = document.createElement("option");
+                    opt.disabled = true;
+                    opt.value = element.section_id;
+                    opt.text = element.section_id + "-" + element.section_details+" (AVL: "+element.total_general_bed_available+" )";
+                doms.appendChild(opt);
+
+                }
+
+            }
+
+            // for (var i = 0; i < b_dt.hospital_list.length; i++) {
+            //     element = b_dt.hospital_list[i];
+            //     doms = document.getElementById("get-section-list");
+                
+            //     var opt = document.createElement("option");
+            //     opt.value = element.section_id;
+            //     opt.text = element.section_id + "-" + element.section_details;
+            //     doms.appendChild(option);
+
+            // }
+
+
+        } else {
+            var b_dt = JSON.parse(this.responseText);
+        }
+    };
+    xhttp.open("GET", "/api/bed-details/" + center_id, true);
+    xhttp.send();
+
+
+
+}
+    
+    </script>
+
+
+
+
+    <!-- sample modal content -->
+    <div class="modal fade bd-example-modal-xl-edit" tabindex="-1" role="dialog"
+        aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0" id="myModalLabel">Edit Patient Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body" id="data-edit-modal">
+                    <form action="/edit_patient" method="POST">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label for="example-text-input" class="col-sm-3 col-form-label text-right">IPD/REDG
+                                        No </label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" type="text" name="ipd_no" id="set-ipd_no">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-text-input" class="col-sm-3 col-form-label text-right">Patient
+                                        ID</label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" readonly type="text" name="patient_id"
+                                            id="set-patient_id">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-text-input" class="col-sm-3 col-form-label text-right">Patient
+                                        Name</label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" type="text" name="patient_name"
+                                            id="set-patient_name">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-number-input"
+                                        class="col-sm-3 col-form-label text-right">Age</label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" type="number" name="age" id="set-age">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label text-right">Sex</label>
+                                    <div class="col-sm-9">
+                                        <input required id="set-sex" class="form-control" type="text" name="sex">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-number-input" class="col-sm-3 col-form-label text-right">S /
+                                        W / D of</label>
+                                    <div class="col-sm-9">
+                                        <input required id="set-s_d_w_of" class="form-control" type="text"
+                                            name="s_d_w_of">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-number-input"
+                                        class="col-sm-3 col-form-label text-right">Address</label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" name="address" id="set-address" cols="30"
+                                            rows="2">
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+
+                            <div class="col-lg-6">
+
+                                <div class="form-group row">
+                                    <label for="example-text-input" class="col-sm-3 col-form-label text-right">Village /
+                                        City / NAC</label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" type="text" name="village"
+                                            id="set-village">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-text-input"
+                                        class="col-sm-3 col-form-label text-right">District</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" type="text" name="district" required>
+                                            <option id="set-district" value="">Select</option>
+                                            <option value="Ganjam">Ganjam</option>
+                                            <option value="Angul">Angul</option>
+                                            <option value="Boudh">Boudh</option>
+                                            <option value="Balangir">Balangir</option>
+                                            <option value="Bargarh">Bargarh</option>
+                                            <option value="Balasore">Balasore</option>
+                                            <option value="Bhadrak">Bhadrak</option>
+                                            <option value="Deogarh">Deogarh</option>
+                                            <option value="Dhenkanal">Dhenkanal</option>
+                                            <option value="Gajapati">Gajapati</option>
+                                            <option value="Jharsuguda">Jharsuguda</option>
+                                            <option value="Khordha">Khordha</option>
+                                            <option value="Keonjhar">Keonjhar</option>
+                                            <option value="Kalahandi">Kalahandi</option>
+                                            <option value="Koraput">Koraput</option>
+                                            <option value="Kendrapara">Kendrapara</option>
+                                            <option value="Malkangiri">Malkangiri</option>
+                                            <option value="Mayurbhanj">Mayurbhanj</option>
+                                            <option value="Nabarangpur">Nabarangpur</option>
+                                            <option value="Nuapada">Nuapada</option>
+                                            <option value="Nayagarh">Nayagarh</option>
+                                            <option value="Puri">Puri</option>
+                                            <option value="Rayagada">Rayagada</option>
+                                            <option value="Sambalpur">Sambalpur</option>
+                                            <option value="Subarnapur">Subarnapur(Sonepur)</option>
+                                            <option value="Sundargarh">Sundargarh</option>
+                                            <option value="Others">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-text-input"
+                                        class="col-sm-3 col-form-label text-right">Block</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" list="block_list" type="text" name="block"
+                                            id="setblock" required>
+                                            <option id="set-block" value="">Select</option>
+                                            <option value="ASKA">ASKA</option>
+                                            <option value="BEGUNIAPADA_KODALA">BEGUNIAPADA_KODALA</option>
+                                            <option value="BELLAGUNTHA">BELLAGUNTHA</option>
+                                            <option value="BHANJANAGAR">BHANJANAGAR</option>
+                                            <option value="BUGUDA">BUGUDA</option>
+                                            <option value="CHATRAPUR">CHATRAPUR</option>
+                                            <option value="CHIKITI">CHIKITI</option>
+                                            <option value="DHARAKOTE">DHARAKOTE</option>
+                                            <option value="DIGAPAHANDI">DIGAPAHANDI</option>
+                                            <option value="GANJAM">GANJAM</option>
+                                            <option value="HINJILICUT">HINJILICUT</option>
+                                            <option value="J.N.PRASAD">Jagannathprasad</option>
+                                            <option value="K.S.NAGAR">Kabisurya Nagar </option>
+                                            <option value="KHALLIKOTE">KHALLIKOTE</option>
+                                            <option value="KUKUDAKHANDI">KUKUDAKHANDI</option>
+                                            <option value="PATRAPUR">PATRAPUR</option>
+                                            <option value="POLOSARA">POLOSARA</option>
+                                            <option value="PURUSHOTTAMPUR">PURUSHOTTAMPUR</option>
+                                            <option value="RANGEILUNDA">RANGEILUNDA</option>
+                                            <option value="SANAKHEMUNDI">SANAKHEMUNDI</option>
+                                            <option value="SHERAGADA">SHERAGADA</option>
+                                            <option value="SURADA">SURADA</option>
+                                            <option value="BeMC">Berhampur</option>
+                                            <option value="OTHER">OTHER</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-tel-input"
+                                        class="col-sm-3 col-form-label text-right">Contact</label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" type="tel" name="telephone"
+                                            id="set-telephone">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-tel-input" class="col-sm-3 col-form-label text-right">Family
+                                        Contact</label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" type="tel" name="alt_telephone"
+                                            id="set-alt_telephone">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="example-number-input" class="col-sm-3 col-form-label text-right">Date of
+                                        Admission
+
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" type="date" name="admission_date"
+                                            id="set-admission_date">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="example-number-input" class="col-sm-3 col-form-label text-right">Details
+                                        regarding
+                                        Co-morbidities
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" class="form-control" name="co_morbidities"
+                                            id="set-co_morbidities" cols="30" rows="2">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-sm-12 text-right">
+                                            <button type="submit" class="btn btn-primary">Edit Patient</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <script>
+        // onclick="seteditmodal('patient_id,ipd_no,patient_name,age,sex,village,block,district,telephone,s_d_w_of,alt_telephone)" 
+        // <input type="hidden" id="<%= element.patient_id%>-get-ipd_no"value="<%= element.ipd_no%>">
+        // <input type="hidden" id="<%= element.patient_id%>-get-patient_name"value="<%= element.patient_name%>">
+        // <input type="hidden" id="<%= element.patient_id%>-get-age"value="<%= element.age%>">
+
+        // <input type="hidden" id="<%= element.patient_id%>-get-sex"value="<%= element.sex%>">
+        // <input type="hidden" id="<%= element.patient_id%>-get-village"value="<%= element.village%>">
+        // <input type="hidden" id="<%= element.patient_id%>-get-block"value="<%= element.block%>">
+
+        // <input type="hidden" id="<%= element.patient_id%>-get-district"value="<%= element.district%>">
+        // <input type="hidden" id="<%= element.patient_id%>-get-telephone"value="<%= element.telephone%>">
+        // <input type="hidden" id="<%= element.patient_id%>-get-s_d_w_of"value="<%= element.s_d_w_of%>">
+
+        // <input type="hidden" id="<%= element.patient_id%>-get-address"value="<%= element.address%>">
+        // <input type="hidden" id="<%= element.patient_id%>-get-co_morbidities"value="<%= element.co_morbidities%>">
+        // <input type="hidden" id="<%= element.patient_id%>-get-admission_date"value="<%= element.admission_date%>">
+
+        function seteditmodal(patient_id) {
+            console.log("ok");
+            document.getElementById("set-patient_id").value = patient_id;
+
+            document.getElementById("set-ipd_no").value = document.getElementById(patient_id + "-get-ipd_no").value;
+            document.getElementById("set-patient_name").value = document.getElementById(patient_id +
+                "-get-patient_name").value;
+            document.getElementById("set-age").value = document.getElementById(patient_id + "-get-age").value;
+
+            document.getElementById("set-sex").value = document.getElementById(patient_id + "-get-sex").value;
+            document.getElementById("set-village").value = document.getElementById(patient_id + "-get-village").value;
+            document.getElementById("set-block").value = document.getElementById(patient_id + "-get-block").value;
+            document.getElementById("set-block").innerHTML = document.getElementById(patient_id + "-get-block").value;
+
+            document.getElementById("set-district").innerHTML = document.getElementById(patient_id + "-get-district")
+                .value;
+            document.getElementById("set-district").value = document.getElementById(patient_id + "-get-district").value;
+            document.getElementById("set-telephone").value = document.getElementById(patient_id + "-get-telephone")
+                .value;
+            document.getElementById("set-alt_telephone").value = document.getElementById(patient_id +
+                "-get-alt_telephone").value;
+            document.getElementById("set-s_d_w_of").value = document.getElementById(patient_id + "-get-s_d_w_of").value;
+
+            document.getElementById("set-address").value = document.getElementById(patient_id + "-get-address").value;
+            document.getElementById("set-co_morbidities").value = document.getElementById(patient_id +
+                "-get-co_morbidities").value;
+            document.getElementById("set-admission_date").value = document.getElementById(patient_id +
+                "-get-admission_date").value;
+
+            // document.getElementById("set-patient_name").value=patient_name;
+            // document.getElementById("set-age").value=age;
+            // document.getElementById("set-sex").value=sex;
+            // document.getElementById("set-village").value=village;
+            // document.getElementById("set-block").value=block;
+            // document.getElementById("set-block").innerHTML=block;
+            // document.getElementById("set-district").value=district;
+            // document.getElementById("set-district").innerHTML=district;
+            // document.getElementById("set-telephone").value=telephone;
+            // document.getElementById("set-s_d_w_of").value=s_d_w_of;
+            // document.getElementById("set-alt_telephone").value=alt_telephone;
+            // document.getElementById("set-admission_date").value=alt_telephone;
+
+
+        }
+    </script>
+
+    <!-- sample modal content -->
+    <div class="modal fade bd-example-modal-readmit" tabindex="-1" role="dialog"
+        aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0" id="myModalLabel">Patient Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <form action="/admit_patient_referral" method="POST">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group row">
+                                    <label for="example-text-input" class="col-sm-3 col-form-label text-right">Referral
+                                        ID</label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" type="text" readonly name="referral_id"
+                                            id="referral_id_rd">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group row">
+                                    <label for="example-text-input" class="col-sm-3 col-form-label text-right">Patient
+                                        ID</label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" type="text" readonly name="patient_id"
+                                            id="patient_id_rd">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group row">
+                                    <label for="example-text-input" class="col-sm-3 col-form-label text-right">Patient
+                                        Name</label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" type="text" readonly name="patient_name"
+                                            id="patient_name_rd">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-4">
+
+
+                                <div class="form-group row">
+                                    <label for="example-number-input" class="col-sm-3 col-form-label text-right">Date of
+                                        Admission
+
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" type="date" name="admission_date"
+                                            id="example-number-input">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-lg-12">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title mt-0" id="myModalLabel">Bed Details</h5>
+                                </div>
+                            </div>
+                            <div class="col-lg-4"> <br>
+
+                                <div class="form-group row">
+                                    <label for="example-tel-input"
+                                        class="col-sm-3 col-form-label text-right">Section</label>
+                                    <div class="col-sm-9">
+                                        <select required class="form-control" type="text" name="section_id"
+                                            id="example-tel-input">
+                                            <option value=""> Select</option>
+
+                                            <% section_list.forEach(element => {  %>
+                                            <option value="<%= element.section_id%>">
+                                                <%= element.section_id%>-<%= element.center_id%> -
+                                                <%= element.category%>, <%= element.room_name%></option>
+                                            <% }) %>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+                            <div class="col-lg-4"> <br>
+
+                                <div class="form-group row">
+                                    <label for="example-tel-input" class="col-sm-3 col-form-label text-right">Bed
+                                        Category</label>
+                                    <div class="col-sm-9">
+                                        <select required class="form-control" type="text" name="bed_category"
+                                            id="example-tel-input">
+                                            <option value=""> Select</option>
+                                            <option value="ISOLATION_BED"> Isolation Bed</option>
+                                            <option value="GENERAL_BED"> General Bed</option>
+                                            <option value="OXYGEN_BED"> Oxygen Bed</option>
+                                            <option value="HDU_BED"> HDU Bed (Highly Dependent Unit)</option>
+                                            <option value="ICU_BED"> ICU Bed (WITHOUT VENTILATOR)</option>
+                                            <option value="VENTILATOR_BED"> Ventilator_</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+                            <div class="col-lg-4"> <br>
+
+
+                                <div class="form-group row">
+                                    <label for="example-tel-input" class="col-sm-3 col-form-label text-right">Bed
+                                        No</label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" type="text" name="bed_no"
+                                            id="example-tel-input">
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-sm-12 text-right">
+                                        <button type="submit" class="btn btn-primary">Add Patient</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- sample modal content -->
+<div class="modal fade bd-example-modal-notshowing" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">Patient Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <form action="/notshown_patient_referral" method="POST">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-3 col-form-label text-right">Referral
+                                    ID</label>
+                                <div class="col-sm-9">
+                                    <input required class="form-control" type="text" readonly name="referral_id"
+                                        id="referral_id_ns">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-3 col-form-label text-right">Patient
+                                    ID</label>
+                                <div class="col-sm-9">
+                                    <input required class="form-control" type="text" readonly name="patient_id"
+                                        id="patient_id_ns">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-3 col-form-label text-right">Patient
+                                    Name</label>
+                                <div class="col-sm-9">
+                                    <input required class="form-control" type="text" readonly name="patient_name"
+                                        id="patient_name_ns">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4">
+
+
+                            <div class="form-group row">
+                                <label for="example-number-input" class="col-sm-3 col-form-label text-right">Explanation
+
+                                </label>
+                                <div class="col-sm-9">
+                                    <input required class="form-control" type="text" name="discharge_brefing"
+                                        id="example-number-input">
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-sm-12 text-right">
+                                <button type="submit" class="btn btn-primary">submit</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+            </div>
+        </div>
+        </form>
+
+    </div>
+
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+<div id="custom-modal" class="modal-demo">
+    <button type="button" class="close" onclick="Custombox.modal.close();"><span>×</span><span
+            class="sr-only">Close</span></button>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="mt-0 header-title">Discharge Summery</h4>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form action="/discharge_patient" method="post">
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-sm-2 col-form-label text-right">Patient
+                                ID</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="patient_id" id="p_id" readonly required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label text-right">Name</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="patient_name" id="p_name" readonly
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-2 col-form-label text-right">Discharge
+                                Type</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="discharge_status" required>
+                                    <option value="">Select a Category</option>
+                                    <option value="DISCHARGED">Discharge</option>
+                                    <option value="DEATH">Death</option>
+                                    <option value="LWMA">LWMA (Leave Without Medical Approval)</option>
+                                </select> </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-tel-input" class="col-sm-2 col-form-label text-right">Discharge
+                                Date</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="date" name="discharge_date" id="dp1" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-sm-2 col-form-label text-right">Discharge
+                                Briefing</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="discharge_brefing" id="example-text-input"
+                                    required>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="row">
+                            <div class="col-sm-12 text-right">
+                                <button type="submit" class="btn btn-primary">Confirm Discharge</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--end card-body-->
+        <!--end card-body-->
+    </div>
+</div>
+
+<div id="custom-modal-health-record" class="modal-demo">
+    <button type="button" class="close" onclick="Custombox.modal.close();"><span>×</span><span
+            class="sr-only">Close</span></button>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="mt-0 header-title">Add Health Record</h4>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form action="/add_health_record" method="post">
+                        <!-- date: [],
+                            time: [],
+                            section_id: [],
+                            bp: [],
+                            spo2: [],
+                            pulse: [],
+                            temperature: [],
+                            condition: [] -->
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-sm-2 col-form-label text-right">Patient
+                                ID</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="patient_id" id="p_id_hr" readonly
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label text-right">Name</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="patient_name" id="p_name_hr" readonly
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-2 col-form-label text-right">Date</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="date" name="date" id="example-tel-input" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-2 col-form-label text-right">Time</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" type="text" name="time" id="example-tel-input" required>
+                                    <option value="">Select</option>
+                                    <option value="MORNING">Morning</option>
+                                    <option value="AFTERNOON">Afternoon</option>
+                                    <option value="EVENING">Evening</option>
+                                    <option value="NIGHT">Night</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-2 col-form-label text-right">SpO2</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="spo2" id="example-tel-input" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-tel-input" class="col-sm-2 col-form-label text-right">Blood
+                                Pressure</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="bp" id="example-tel-input" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-sm-2 col-form-label text-right">Pulse
+                                Rate</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="pulse" id="example-text-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-sm-2 col-form-label text-right">Blood
+                                Sugar</label>
+                            <div class="col-sm-5">
+                                <input class="form-control" type="text" placeholder="FBS (Fasting Blood Sugar)"
+                                    name="fbs" id="example-text-input" required>
+                            </div>
+                            <div class="col-sm-5">
+                                <input class="form-control" type="text" placeholder="RBS (Random Blood Sugar)"
+                                    name="rbs" id="example-text-input" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-sm-2 col-form-label text-right">Temp</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="temperature" id="example-text-input"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-sm-2 col-form-label text-right">Condition</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" type="text" name="condition" id="example-text-input"
+                                    required>
+                                    <option value=""> Select</option>
+                                    <option value="STABLE"> STABLE</option>
+                                    <option value="PROGRESSING"> PROGRESSING</option>
+                                    <option value="DETERIORATING"> DETERIORATING</option>
+                                    <option value="CRITICAL"> CRITICAL</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="row">
+                            <div class="col-sm-12 text-right">
+                                <button type="submit" class="btn btn-primary">Add Record</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--end card-body-->
+        <!--end card-body-->
+    </div>
+</div>
+
+
+<div id="custom-modal-shift-section" class="modal-demo">
+    <button type="button" class="close" onclick="Custombox.modal.close();"><span>×</span><span
+            class="sr-only">Close</span></button>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="mt-0 header-title">Shift Room/Section</h4>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form action="/shift_patient_section" method="post">
+                        <!-- date: [],
+                            time: [],
+                            section_id: [],
+                            bp: [],
+                            spo2: [],
+                            pulse: [],
+                            temperature: [],
+                            condition: [] -->
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-sm-2 col-form-label text-right">Patient
+                                ID</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="patient_id" id="p_id_sft" readonly
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label text-right">Name</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="patient_name" id="p_name_sft" readonly
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-2 col-form-label text-right">Date</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="date" name="date" id="example-tel-input" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-sm-2 col-form-label text-right">From
+                                Section</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="from_section_id" id="from_section_id"
+                                    readonly required>
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-sm-2 col-form-label text-right">To
+                                Section</label>
+                            <div class="col-sm-10">
+                                <select required class="form-control" type="text" name="to_section_id"
+                                    id="example-tel-input">
+                                    <option id="exsiting_section_id" value=""> </option>
+
+                                    <% section_list.forEach(element => {  %>
+                                    <option value="<%= element.section_id%>">
+                                        <%= element.section_id%>-<%= element.center_id%> - <%= element.category%>,
+                                        <%= element.room_name%></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-2 col-form-label text-right">Bed
+                                Category</label>
+                            <div class="col-sm-10">
+                                <select required class="form-control" type="text" name="bed_category"
+                                    id="example-tel-input">
+                                    <option value=""> Select</option>
+                                    <option value="ISOLATION_BED"> Isolation Bed</option>
+                                    <option value="GENERAL_BED"> General Bed</option>
+                                    <option value="OXYGEN_BED"> Oxygen Bed</option>
+                                    <option value="HDU_BED"> HDU Bed (Highly Dependent Unit)</option>
+                                    <option value="ICU_BED"> ICU Bed (WITHOUT VENTILATOR)</option>
+                                    <option value="VENTILATOR_BED"> Ventilator_</option>
+
+                                </select> </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-2 col-form-label text-right">Bed No</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="bed_no" id="example-tel-input" required>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="row">
+                            <div class="col-sm-12 text-right">
+                                <button type="submit" class="btn btn-primary">Shift Patient</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--end card-body-->
+        <!--end card-body-->
+    </div>
+</div>
+
+<div id="custom-modal-refer" class="modal-demo">
+    <button type="button" class="close" onclick="Custombox.modal.close();"><span>×</span><span
+            class="sr-only">Close</span></button>
+    <div class="card">
+
+
+
+        <div class="card-body">
+            <h4 class="mt-0 header-title">Refer To Other Hospitals</h4>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form action="/add_referral" method="post">
+                        <!-- date: [],
+                            time: [],
+                            section_id: [],
+                            bp: [],
+                            spo2: [],
+                            pulse: [],
+                            temperature: [],
+                            condition: [] -->
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-sm-2 col-form-label text-right">Patient
+                                ID</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="patient_id" id="p_id_refer" readonly
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label text-right">Name</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="patient_name" id="p_name_refer" readonly
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-2 col-form-label text-right">Date</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="date" name="date" id="example-tel-input1" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-sm-2 col-form-label text-right">From
+                                Hospital</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="from_center_id" id="from_center_id"
+                                    readonly required>
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-sm-2 col-form-label text-right">To
+                                Hospital</label>
+                            <div class="col-sm-10">
+                                <select required class="form-control" type="text" name="to_center_id"
+                                    id="example-tel-input">
+                                    <option value=""> Select Hospital</option>
+
+                                    <% centers_list.forEach(element => {  %>
+                                    <option value="<%= element.center_id%>"><%= element.center_id%> -
+                                        <%= element.facility_name%>, <%= element.category%>, <%= element.village%>,
+                                        <%= element.block%></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-2 col-form-label text-right">Urgency</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="urgency" id="example-tel-input" required>
+                                    <option value="NOT_URGENT"> Not Urgent</option>
+                                    <option value="URGENT">Urgent</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-2 col-form-label text-right">Bed
+                                Category</label>
+                            <div class="col-sm-10">
+                                <select required class="form-control" type="text" name="bed_category"
+                                    id="example-tel-input">
+                                    <option value=""> Select</option>
+                                    <option value="ISOLATION_BED"> Isolation Bed</option>
+                                    <option value="GENERAL_BED"> General Bed</option>
+                                    <option value="OXYGEN_BED"> Oxygen Bed</option>
+                                    <option value="HDU_BED"> HDU Bed (Highly Dependent Unit)</option>
+                                    <option value="ICU_BED"> ICU Bed (WITHOUT VENTILATOR)</option>
+                                    <option value="VENTILATOR_BED"> Ventilator_</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-2 col-form-label text-right">Referred
+                                By</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="referred_by" id="example-tel-input"
+                                    required>
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-2 col-form-label text-right">Refer
+                                Briefing</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" type="text" name="referred_briefing"
+                                    id="example-tel-input" cols="30" rows="2" required>
+
+                                    </textarea>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 text-right">
+                                <button type="submit" class="btn btn-primary">Refer Patient</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--end card-body-->
+        <!--end card-body-->
+    </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script>
+    // $("#example-tel-input").datepicker().datepicker("setDate", new Date());
+
+    function setdischargemodal(p_id, p_name) {
+        document.getElementById("p_id").value = p_id;
+        document.getElementById("p_name").value = p_name;
+
+    }
+
+    function setheathtrecordmodal(p_id, p_name) {
+        document.getElementById("p_id_hr").value = p_id;
+        document.getElementById("p_name_hr").value = p_name;
+
+    }
+
+    function setreadmitmodal(r_id, p_id, p_name) {
+        document.getElementById("referral_id_rd").value = r_id;
+        document.getElementById("patient_id_rd").value = p_id;
+        document.getElementById("patient_name_rd").value = p_name;
+
+    }
+
+    function setnsmodal(r_id, p_id, p_name) {
+        document.getElementById("referral_id_ns").value = r_id;
+        document.getElementById("patient_id_ns").value = p_id;
+        document.getElementById("patient_name_ns").value = p_name;
+
+    }
+
+    function setshiftmodal(p_id, p_name, p_section) {
+        document.getElementById("p_id_sft").value = p_id;
+        document.getElementById("p_name_sft").value = p_name;
+        document.getElementById("from_section_id").value = p_section;
+        document.getElementById("exsiting_section_id").value = p_section;
+        document.getElementById("exsiting_section_id").innerHTML = p_section;
+
+    }
+
+    function setrefermodal(p_id, p_name, p_center) {
+        document.getElementById("p_id_refer").value = p_id;
+        document.getElementById("p_name_refer").value = p_name;
+        document.getElementById("from_center_id").value = p_center;
+
+    }
+</script>
+
+
+
+</div>
+<!--end col-->
+
+
+
+
+</div><!-- container -->
+
+
+</div>
+<%- include("footer"); -%>

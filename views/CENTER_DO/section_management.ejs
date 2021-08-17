@@ -1,0 +1,340 @@
+<%- include("header",{element: element}); -%>
+
+<!-- Page-Title -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-right align-item-center mt-2">
+                <a href="#custom-modal" class="btn btn-info px-4 align-self-center report-btn" data-animation="blur" data-plugin="custommodal" data-overlaycolor="#38414a">Add Section/Room</a>
+            </div>
+            <h4 class="page-title mb-2"><i class="mdi mdi-monitor mr-2"></i>Section Management</h4>  
+            <div class="">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">District Covid Management</a></li>
+                    <li class="breadcrumb-item active">Section Management</li>
+                </ol>
+            </div>                                      
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+<%- include("header2"); -%>
+            <!-- Page Content-->
+            <div class="page-content" style="overflow: scroll;">
+                    <div class="container" style="overflow: scroll;">
+
+
+                  
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+    
+                                    <h4 class="mt-0 header-title">Section/Room List</h4>
+                                    
+    
+                                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive " style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                        <thead>
+                                        <tr>
+                                            <th>Section Details</th>
+                                            <th>Center Details</th>
+                                            <th>General Bed Without Oxygen</th>
+                                            <th>General Bed With Oxygen</th>
+                                            <th>HDU Bed</th>
+                                            <th>ICU Bed Without Ventilator</th>
+                                            <th>ICU Bed With Ventilator </th>
+                                            <th>Incharge Name</th>
+                                            <th>Phone</th>
+                                            <th>Edit</th>
+                                            
+                                        </tr>
+                                        </thead>
+                                         
+                                        <tbody>
+                                            <% section_list.forEach(element => {  %>
+                                                <tr>
+                                                    <td>
+                                                        Id: <%= element.section_id%>
+                                                        <br>
+                                                        Category: <%= element.category%>
+                                                        <br>
+                                                        Room Name: <%= element.room_name%>
+                                                        <br>
+                                                        Floor: <%= element.floor%>
+                                                        <br>
+                                                    </td>
+                                                    <td>
+                                                        <%= element.center_id%>
+                                                        <br>
+                                                        <%= element.center_details%>
+                                                    </td>
+                                                    <td><%= element.no_of_general_beds%></td>
+                                                    <td><%= element.no_of_oxygen_beds%></td>
+                                                    <td><%= element.no_hdu_beds%></td>
+                                                    <td><%= element.no_of_icu_beds%></td>
+                                                    <td><%= element.no_of_ventilator_beds%></td>
+                                                    <td><%= element.incharge_name%></td> 
+                                                    <td><%= element.telephone%></td> 
+                                                    <td>   <button type="button" onclick="seteditmodal('<%= element.section_id%>','<%= element.room_name%>')" class="btn btn-info px-4 align-self-center report-btn" data-toggle="modal"
+                                                        data-target=".bs-example-modal-center">Edit</button>                                     
+                                                    </td> 
+                                                    
+                                                </tr>
+                                                
+                                            <% }) %>
+                                        </tbody>
+                                        
+                                    </table>        
+                                </div>
+                            </div>
+                        </div> <!-- end col -->
+                    </div> <!-- end row -->
+
+                    <div id="custom-modal" class="modal-demo">
+                        <button type="button" class="close" onclick="Custombox.modal.close();"><span>×</span><span
+                                class="sr-only">Close</span></button>
+                        <div class="card">
+                           
+
+                            <div class="card-body">        
+                                <h4 class="mt-0 header-title">Add Section/Room</h4>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <form action="/add_section" method="post">
+                                            
+                                           
+        
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label text-right">Catagory</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" name="category" required>
+                                                        <option value="">Select a Category</option>
+                                                        <option value="ICU">ICU</option>
+                                                        <option value="GENERAL_WARD">GENERAL WARD</option>
+                                                        <option value="ISOLATION_WARD">ISOLATION WARD</option>
+                                                       
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Floor</label>
+                                                <div class="col-sm-10">
+                                                    <input required class="form-control" type="number" name="floor" id="example-email-input">
+                                                </div>
+                                            </div> 
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Section Name</label>
+                                                <div class="col-sm-10">
+                                                    <input required class="form-control" type="text" name="room_name" id="example-email-input">
+                                                </div>
+                                            </div> 
+                                            <!-- <div class="form-group row">
+                                                <label for="example-text-input" class="col-sm-4 col-form-label text-right"> NO OF ISOLATION BED </label>
+                                                <div class="col-sm-8">
+                                                    <input required class="form-control" type="number" name="no_isolation_beds" value="0"
+                                                        id="example-text-input" required>
+                                                </div>
+                                            </div> -->
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-4 col-form-label text-right">No Of General Bed Without Oxygen</label>
+                                                <div class="col-sm-8">
+                                                    <input required class="form-control" type="number" name="no_of_general_beds" value="0" id="example-email-input">
+                                                </div>
+                                            </div> 
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-4 col-form-label text-right">No of General Bed With Oxygen</label>
+                                                <div class="col-sm-8">
+                                                    <input required class="form-control" type="number" name="no_of_oxygen_beds" value="0" id="example-email-input">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-text-input" class="col-sm-4 col-form-label text-right"> NO OF HDU (High Dependency Unit) BED </label>
+                                                <div class="col-sm-8">
+                                                    <input  required class="form-control" type="number" name="no_hdu_beds" value="0"
+                                                        id="example-text-input" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-4 col-form-label text-right">No of ICU Bed Without Ventilator</label>
+                                                <div class="col-sm-8">
+                                                    <input required class="form-control" type="number" name="no_of_icu_beds" value="0" id="example-email-input">
+                                                </div>
+                                            </div> 
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-4 col-form-label text-right">No of ICU Bed With Ventilator </label>
+                                                <div class="col-sm-8">
+                                                    <input required class="form-control" type="number" name="no_of_ventilator_beds" value="0" id="example-email-input">
+                                                </div>
+                                            </div> 
+                                            <div class="form-group row">
+                                                <label for="example-tel-input" class="col-sm-4 col-form-label text-right">Incharge Name</label>
+                                                <div class="col-sm-8">
+                                                    <input required class="form-control" type="text" name="incharge_name" id="example-tel-input">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-tel-input" class="col-sm-4 col-form-label text-right">Telephone</label>
+                                                <div class="col-sm-8">
+                                                    <input required class="form-control" type="tel" name="telephone" id="example-tel-input">
+                                                </div>
+                                            </div>
+                                           
+        
+                                                
+                                                
+                                                
+                                                
+                                            <div class="row">
+                                                <div class="col-sm-12 text-right">
+                                                    <button type="submit" class="btn btn-primary">Add Section/Room</button>
+                                                </div>
+                                            </div>  
+                                        </form>                       
+                                    </div>
+                                </div>                                                                      
+                            </div><!--end card-body-->
+
+                            <!--end card-body-->
+                        </div>
+                    </div>
+
+                     <!-- sample modal content -->
+       <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+       aria-hidden="true">
+       <div class="modal-dialog modal-dialog-centered">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title mt-0" id="myModalLabel">Edit Details</h5>
+                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+               </div>
+               <div class="modal-body">
+                   
+                <div class="card">
+                    <div class="card-body">        
+                        <h4 class="mt-0 header-title">Edit Details</h4>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form action="/edit_section" method="post">
+                                    
+                                    <div class="form-group row">
+                                        <label for="example-email-input" class="col-sm-2 col-form-label text-right">Section ID</label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control" type="text" value="" readonly name="section_id" id="set_section_id">
+                                        </div>
+                                    </div> 
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label text-right">Catagory</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" name="category" required id="set_category">
+                                                <option value="">Select a Category</option>
+                                                <option value="ICU">ICU</option>
+                                                <option value="GENERAL_WARD">GENERAL WARD</option>
+                                                <option value="ISOLATION_WARD">ISOLATION WARD</option>
+                                               
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="example-email-input" class="col-sm-2 col-form-label text-right">Floor</label>
+                                        <div class="col-sm-10">
+                                            <input required class="form-control" type="number" name="floor" id="set_floor" >
+                                        </div>
+                                    </div> 
+                                    <div class="form-group row">
+                                        <label for="example-email-input" class="col-sm-2 col-form-label text-right">Room Name</label>
+                                        <div class="col-sm-10">
+                                            <input required class="form-control" type="text" name="room_name" id="set_room_name">
+                                        </div>
+                                    </div> 
+                                    <div class="form-group row">
+                                        <label for="example-text-input" class="col-sm-4 col-form-label text-right"> NO OF ISOLATION BED </label>
+                                        <div class="col-sm-8">
+                                            <input required class="form-control" type="number" name="no_isolation_beds"  value="0"
+                                                id="set_no_isolation_beds" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-text-input" class="col-sm-4 col-form-label text-right"> NO OF HDU (Highly Dependent Unit) BED </label>
+                                        <div class="col-sm-8">
+                                            <input required class="form-control" type="number" name="no_hdu_beds" value="0"
+                                                id="set_no_hdu_beds" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-email-input" class="col-sm-4 col-form-label text-right">No Of General Bed Without Oxygen</label>
+                                        <div class="col-sm-8">
+                                            <input required class="form-control" type="number" name="no_of_general_beds" value="0"  id="set_no_of_general_beds">
+                                        </div>
+                                    </div> 
+                                    <div class="form-group row">
+                                        <label for="example-email-input" class="col-sm-4 col-form-label text-right">No of General Bed With Oxygen</label>
+                                        <div class="col-sm-8">
+                                            <input required class="form-control" type="number" name="no_of_oxygen_beds" value="0" id="set_no_of_oxygen_beds">
+                                        </div>
+                                    </div> 
+                                    <div class="form-group row">
+                                        <label for="example-email-input" class="col-sm-4 col-form-label text-right">No of ICU Bed Without Ventilator</label>
+                                        <div class="col-sm-8">
+                                            <input required class="form-control" type="number" name="no_of_icu_beds" value="0" id="set_no_of_icu_beds">
+                                        </div>
+                                    </div> 
+                                    <div class="form-group row">
+                                        <label for="example-email-input" class="col-sm-4 col-form-label text-right">No of ICU Bed With Ventilator </label>
+                                        <div class="col-sm-8">
+                                            <input required class="form-control" type="number" name="no_of_ventilator_beds" value="0" id="set_no_of_ventilator_beds">
+                                        </div>
+                                    </div> 
+                                    <div class="form-group row">
+                                        <label for="example-tel-input" class="col-sm-4 col-form-label text-right">Incharge Name</label>
+                                        <div class="col-sm-8">
+                                            <input required class="form-control" type="text" name="incharge_name" id="set_incharge_name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="example-tel-input" class="col-sm-4 col-form-label text-right">Telephone</label>
+                                        <div class="col-sm-8">
+                                            <input required class="form-control" type="tel" name="telephone" id="set_telephone">
+                                        </div>
+                                    </div>
+                                   
+
+                                        
+                                        
+                                        
+                                        
+                                    <div class="row">
+                                        <div class="col-sm-12 text-right">
+                                            <button type="submit" class="btn btn-primary">Add Section/Room</button>
+                                        </div>
+                                    </div>  
+                                </form>                       
+                            </div>
+                        </div>                                                                      
+                    </div><!--end card-body-->
+                    <!--end card-body-->
+                </div>                   
+        </div>
+               
+
+           </div>
+
+       </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<script>
+    function seteditmodal(s_id,s_name) {
+       x= document.getElementById("set_section_id")
+       x.value=s_id;
+        document.getElementById("set_room_name").value=s_name;
+    }
+</script>
+
+                </div><!-- container -->
+
+               
+            </div>
+<%- include("footer"); -%>

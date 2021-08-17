@@ -1,0 +1,159 @@
+<%- include("header",{element: element}); -%>
+
+<!-- Page-Title -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-right align-item-center mt-2">
+                <button type="button" class="btn btn-info px-4 align-self-center report-btn" data-toggle="modal"
+                    data-target=".bd-example-modal-xl">Add Patient</button>
+
+            </div>
+            <h4 class="page-title mb-2"><i class="mdi mdi-monitor mr-2"></i>Hospital Patient List</h4>
+            <div class="">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">District Covid Management</a></li>
+                    <li class="breadcrumb-item active">Hospital Patient List</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+<%- include("header2"); -%>
+<!-- Page Content-->
+<div class="page-content" style="overflow: scroll;">
+        <div class="container" style="overflow: scroll;">
+
+
+        
+
+        <div class="row">
+           
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mt-0 header-title"> Patient List</h4>
+                        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive "
+                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Patient Id</th>
+                                    <th>Patient Name</th>
+                                    <th>Center ID</th>
+                                    <th>Section ID</th>
+                                    <th>Age</th>
+                                    <th>Sex</th>
+                                    <th>S/D/F/W Of</th>
+                                    <th>Adress</th>
+                                    <th>Village</th>
+                                    <th>Block</th>
+                                    <th>Telephone</th>
+                                    <th>Alt Telephone</th>
+                                    <th>Covid Status</th>
+                                    <th>Covid Report</th>
+                                    <th>Co Morbiditie</th>
+                                    <th>Travel History</th>
+                                    <th>Positive Declare Date</th>
+                                    <th>Admission Date</th>
+                                    <th>Bed No</th>
+                                    <th>Patient Records</th>
+                                    
+
+                                </tr>
+                            </thead>
+                           
+                            <tbody>
+                                <% patients_list.forEach(element => { if(element.discharge_status==="ACTIVE") { %>
+                                <tr>
+                                    <td><%= element.patient_id%></td>
+                                    <td><%= element.patient_name%></td>
+                                    <td><%= element.active_bed_details.center_id%></td>
+                                    <td><%= element.active_bed_details.section_id%></td>
+                                    <td><%= element.age%></td>
+                                    <td><%= element.sex%></td>
+                                    <td><%= element.s_d_w_of%></td>
+                                    <td><%= element.address%></td>
+                                    <td><%= element.village%></td>
+                                    <td><%= element.block%></td>
+                                    <td><%= element.telephone%></td>
+                                    <td><%= element.alt_telephone%></td>
+                                    <td><%= element.covid_status%></td>
+                                    <td><%= element.covid_report%></td>
+                                    <td><%= element.co_morbidities%></td>
+                                    <td><%= element.travel_history%></td>
+                                    <td><%= element.positive_declare_date%></td>
+                                    <td><%= element.admission_date%></td>
+                                    <td><%= element.active_bed_details.bed_no%></td>
+                                    <td><a href="/patientdetails/<%= element.patient_id%>">Click Here</a></td>
+
+                                </tr>
+
+                                <% }}) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+
+
+
+
+
+
+    <script>
+        function setdischargemodal(p_id,p_name) {
+            document.getElementById("p_id").value = p_id;
+            document.getElementById("p_name").value = p_name;
+            
+        }
+
+        function setheathtrecordmodal(p_id,p_name) {
+            document.getElementById("p_id_hr").value = p_id;
+            document.getElementById("p_name_hr").value = p_name;
+            
+        }
+        function setreadmitmodal(r_id,p_id,p_name) {
+            document.getElementById("referral_id_rd").value = r_id;
+            document.getElementById("patient_id_rd").value = p_id;
+            document.getElementById("patient_name_rd").value = p_name;
+            
+        }
+        function setnsmodal(r_id,p_id,p_name) {
+            document.getElementById("referral_id_ns").value = r_id;
+            document.getElementById("patient_id_ns").value = p_id;
+            document.getElementById("patient_name_ns").value = p_name;
+            
+        }
+        
+        function setshiftmodal(p_id,p_name,p_section) {
+            document.getElementById("p_id_sft").value = p_id;
+            document.getElementById("p_name_sft").value = p_name;
+            document.getElementById("from_section_id").value = p_section;
+            document.getElementById("exsiting_section_id").value = p_section;
+            document.getElementById("exsiting_section_id").innerHTML = p_section;
+            
+        }
+
+        function setrefermodal(p_id,p_name,p_center) {
+            document.getElementById("p_id_refer").value = p_id;
+            document.getElementById("p_name_refer").value = p_name;
+            document.getElementById("from_center_id").value = p_center;
+            
+        }
+    </script>
+
+
+
+</div>
+<!--end col-->
+
+
+
+
+</div><!-- container -->
+
+
+</div>
+<%- include("footer"); -%>

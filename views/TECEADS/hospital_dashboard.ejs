@@ -1,0 +1,270 @@
+<%- include("header",{element: element}); -%>
+
+<!-- Page-Title -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-right align-item-center mt-2">
+                <button type="button" class="btn btn-info px-4 align-self-center report-btn" data-toggle="modal"
+                    data-target=".bd-example-modal-xl">Add Patient</button>
+
+            </div>
+            <h4 class="page-title mb-2"><i class="mdi mdi-monitor mr-2"></i>Dashboard</h4>
+            <div class="">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">District Covid Management</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+<%- include("header2"); -%>
+<!-- Page Content-->
+                <div class="page-content" style="overflow: scroll;">
+                    <div class="container-fluid"> 
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title">Positive Cases</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark">457</h2> 
+                                                    <p class="mb-0 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>14.5%</span> Up From Last Week</p>
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-warning bg-soft-danger"></i>
+                                                </div>
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title">Bed Availability</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark">254/7000</h2> 
+                                                    <p class="mb-0 text-muted"><span class="text-danger"><i class="mdi mdi-arrow-down"></i>14.5%</span> Up From Last Week</p>
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-time-reverse bg-soft-warning"></i>
+                                                </div>
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title">ICU Availability</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark">38/40</h2> 
+                                                    <p class="mb-0 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>14.5%</span> Up From Last Week</p>
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-time-reverse bg-soft-warning"></i>
+                                                </div>
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title">O2 Bed Availability</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark">653/700</h2> 
+                                                    <p class="mb-0 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>14.5%</span> Up From Last Week</p>
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-time-reverse bg-soft-warning"></i>
+                                                </div>
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body mb-0">
+                                        <div class="row">                                            
+                                            <div class="col-8 align-self-center">
+                                                <div class="">
+                                                    <h4 class="mt-0 header-title">O2 Availablity</h4>
+                                                    <h2 class="mt-0 font-weight-bold text-dark">267 units</h2> 
+                                                    <p class="mb-0 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>14.5%</span> Up From Last Week</p>
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-4 align-self-center">
+                                                <div class="icon-info text-right">
+                                                    <i class="dripicons-heart bg-soft-success"></i>
+                                                </div>
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-body-->
+                                    <!-- <div class="card-body overflow-hidden p-0">
+                                        <div class="d-flex mb-0 h-100 dash-info-box">
+                                            <div class="w-100">                                                
+                                                <div class="apexchart-wrapper">
+                                                    <div id="dash_spark_1" class="chart-gutters"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!--end card-body-->                                                                    
+                                </div><!--end card-->
+                            </div><!--end col-->
+                            <div class="col-lg-4">
+                                <div class="card carousel-bg-img">
+                                    <div class="card-body dash-info-carousel mb-0">
+                                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item active">
+                                                    <div class="row">                                            
+                                                        <div class="col-12 align-self-center">
+                                                            <div class="">
+                                                                <h4 class="mt-0 header-title text-left">DCH Availability</h4>
+                                                                <h2 class="mt-0 font-weight-bold text-dark">90/160</h2> 
+                                                                <p class="mb-1 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>35.5%</span> Last 100 Subscriptions</p>
+                                                            </div>
+                                                        </div><!--end col-->                                                        
+                                                    </div><!--end row-->                                                    
+                                                </div><!--end carousel-item-->
+                                                <div class="carousel-item">
+                                                    <div class="row">                                            
+                                                        <div class="col-12 align-self-center">
+                                                            <div class="text-center">
+                                                                <h4 class="mt-0 header-title text-left">DCHC Availability</h4>
+                                                                <h2 class="mt-0 font-weight-bold text-dark">90/160</h2> 
+                                                                <p class="mb-1 text-muted"><span class="text-danger"><i class="mdi mdi-arrow-down"></i>1.5%</span> Down From Last week</p>
+                                                            </div>
+                                                        </div><!--end col-->                                                        
+                                                    </div><!--end row-->                                                    
+                                                </div><!--end carousel-item-->
+
+                                                <div class="carousel-item">
+                                                    <div class="row">                                            
+                                                        <div class="col-12 align-self-center">
+                                                            <div class="text-center">
+                                                                <h4 class="mt-0 header-title text-left">DCCC Availability</h4>
+                                                                <h2 class="mt-0 font-weight-bold text-dark">90/160</h2> 
+                                                                <p class="mb-1 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>11.1%</span> Up from Last Month</p>
+                                                            </div>
+                                                        </div><!--end col-->                                                        
+                                                    </div><!--end row-->                                                    
+                                                </div><!--end carousel-item-->
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </div>
+                                    </div><!--end card-body-->                                                                                                        
+                                </div><!--end card-->
+                            </div><!--end col--> 
+                                            
+                        </div><!--end row-->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title mt-0">Overview</h4>                                         
+                                        <div class="chart-demo dash-apex-chart">
+                                            <div id="d2_overview" class="apex-charts"></div>
+                                        </div>                                      
+                                    </div><!--end card-body--> 
+                                </div><!--end card--> 
+                            </div> <!--end col-->                               
+                        </div><!--end row--> 
+
+                    </div><!-- container -->
+                    
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="header-title mt-0">Bed Availability</h4>
+                                    <div class="chart-demo dash-apex-chart">
+                                        <div id="d2_performance" class="apex-charts"></div>
+                                    </div>
+                                </div><!--end card-body--> 
+                            </div><!--end card--> 
+                        </div> <!--end col--> 
+                        <!-- <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="header-title mt-0 mb-4">Basic Column Chart</h4>
+                                    <div class="chart-demo">
+                                        <div id="apex_column1" class="apex-charts"></div>
+                                    </div>                                        
+                                </div>
+                            </div>
+                        </div>   -->
+                    </div><!--end row-->
+                    </div>
+<%- include("footer"); -%>
